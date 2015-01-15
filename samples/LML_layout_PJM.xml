@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!---
+ Copyright (c) 2014 RIKEN AICS.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ Contributors:
+    Bryzgalov Peter (RIKEN AICS)
+-->
+<lml:lgui xmlns:lml="http://eclipse.org/ptp/lml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd " version="1.1"> 
+
+<objects>
+<object color="#FFFFFF" id="empty" name="Empty job" type="job"/>
+</objects>
+<nodedisplay title="default" id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView">
+  <scheme><el1 min="0" tagname="__empty__"></el1></scheme>
+  <data><el1 min="0" oid="empty"></el1></data>
+</nodedisplay>
+
+<nodedisplaylayout id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView">
+  <el0 rows="0" cols="0">
+  </el0>
+</nodedisplaylayout>
+
+<tablelayout id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" active="true" contenthint="jobs">
+ <column cid="1" pos="1" width="0.1" active="true" key="accept" />
+ <column cid="2" pos="2" width="0.1" active="true" key="queued" />
+ <column cid="3" pos="3" width="0.1" active="true" key="stgin" />
+ <column cid="4" pos="4" width="0.1" active="true" key="ready" />
+ <column cid="5" pos="5" width="0.1" active="true" key="running" />
+ <column cid="6" pos="6" width="0.1" active="true" key="runout" />
+ <column cid="7" pos="7" width="0.1" active="true" key="stgout" />
+ <column cid="8" pos="8" width="0.1" active="true" key="hold" />
+ <column cid="9" pos="9" width="0.1" active="true" key="error" />
+ <column cid="10" pos="10" width="0.1" active="true" key="total" />
+ <pattern>
+    <select rel="=" value="RUNNING"></select>
+</pattern>
+</column>
+</tablelayout>
+
+<table title="Running" id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView"  contenttype="jobs" description="This is the table showing all running jobs">
+<column id="1" name="accept"/>
+<column id="2" name="queued"/>
+<column id="3" name="stgin"/>
+<column id="4" name="ready"/>
+<column id="5" name="running"/>
+<column id="6" name="runout"/>
+<column id="7" name="stgout"/>
+<column id="8" name="hold"/>
+<column id="9" name="error"/>
+<column id="10" name="total"/>
+</table>
+
+
+
+<table title="Nodes" id="nodelist"  contenttype="nodes" description="This is the table contain all nodes of the system">
+<column id="1" name="id" sort="alpha" type="mandatory"></column>
+<column id="2" name="ncores"></column>
+<column id="3" name="physmem" sort="alpha"/>
+<column id="4" name="state" sort="alpha"/>
+</table>
+
+<tablelayout id="nodes" gid="nodelist" active="false">
+ <column cid="1" pos="1" width="1" active="true" key="id" />
+ <column cid="2" pos="2" width="1" active="true" key="ncores" />
+ <column cid="3" pos="3" width="1" active="true" key="physmem" />
+ <column cid="4" pos="4" width="1" active="true" key="state" />
+</tablelayout>
+
+
+</lml:lgui>

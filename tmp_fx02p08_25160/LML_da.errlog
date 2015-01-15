@@ -1,0 +1,5 @@
+  LML Data Access Workflow Manager 1.0, starting at (Thu Jan 15 17:06:17 JST 2015)
+"my" variable $srcDir masks earlier declaration in same scope at rms/PJM/da_system_info_LML.pl line 26.
+Undefined subroutine &main::escapeForXML called at rms/PJM/da_system_info_LML.pl line 137.
+failed executing: CMD_JOBINFO=/usr/bin/pjstat CMD_NODEINFO=/usr/bin/pjshowrsc /usr/bin/perl rms/PJM/da_system_info_LML.pl ./tmp_fx02p08_25160/sysinfo_LML.xml rc=6400
+  LML Data Access Workflow Manager 1.0, ending at   (Thu Jan 15 17:06:17 JST 2015)

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!---
+ Copyright (c) 2011 Forschungszentrum Juelich GmbH.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ Contributors:
+    Wolfgang Frings (Forschungszentrum Juelich GmbH) 
+-->
+<lml:lgui xmlns:lml="http://eclipse.org/ptp/lml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd " version="1.1"> 
+
+<objects>
+<object color="#FFFFFF" id="empty" name="Empty job" type="job"/>
+</objects>
+
+<nodedisplaylayout id="nodedisplay" gid="1">
+  <el0 rows="16" cols="0">
+  </el0>
+</nodedisplaylayout>
+
+<nodedisplay title="default" id="1">
+  <scheme><el1 min="0" tagname="__empty__"></el1></scheme>
+  <data><el1 min="0" oid="empty"></el1></data>
+</nodedisplay>
+
+<tablelayout id="tl_RUN" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenthint="jobs">
+ <column cid="1" pos="0" width="0.1" active="true" key="totalcores" />
+ <column cid="2" pos="1" width="0.1" active="true" key="owner" />
+ <column cid="3" pos="2" width="0.1" active="true" key="queue" />
+ <column cid="4" pos="3" width="0.2" active="true" key="wall" />
+ <column cid="5" pos="4" width="0.2" active="true" key="queuedate" />
+ <column cid="6" pos="5" width="0.2" active="true" key="dispatchdate" />
+</tablelayout>
+
+<table id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs"/>
+
+
+<tablelayout id="tl_WAIT" gid="org.eclipse.ptp.rm.lml.ui.InactiveJobsView" contenthint="jobs">
+ <column cid="1" pos="0" width="0.3" active="true" key="size_req" />
+ <column cid="2" pos="1" width="0.1" active="true" key="owner" />
+ <column cid="3" pos="2" width="0.2" active="true" key="queue" />
+ <column cid="4" pos="3" width="0.1" active="true" key="wall" />
+ <column cid="5" pos="4" width="0.15" active="true" key="queuedate" />
+ <column cid="6" pos="5" width="0.15" active="true" key="name" />
+</tablelayout>
+
+<table id="org.eclipse.ptp.rm.lml.ui.InactiveJobsView" contenttype="jobs"/>
+
+</lml:lgui>

@@ -1,0 +1,4 @@
+  LML Data Access Workflow Manager 1.0, starting at (Thu Jan 15 16:56:27 JST 2015)
+Can't locate ../../lib/LML_da_util.pm in @INC (@INC contains: . /usr/local/lib64/perl5 /usr/local/share/perl5 /usr/lib64/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib64/perl5 /usr/share/perl5) at rms/PJM/da_system_info_LML.pl line 23.
+failed executing: CMD_JOBINFO=/usr/bin/pjstat CMD_NODEINFO=/usr/bin/pjshowrsc /usr/bin/perl rms/PJM/da_system_info_LML.pl ./tmp_fx02p08_21581/sysinfo_LML.xml rc=512
+  LML Data Access Workflow Manager 1.0, ending at   (Thu Jan 15 16:56:27 JST 2015)
