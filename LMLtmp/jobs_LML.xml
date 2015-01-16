@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lml:lgui xmlns:lml="http://eclipse.org/ptp/lml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd"
+	version="1.1">
+<objects>
+<object id="j000001" name="-" type="job"/>
+</objects>
+<information>
+<info oid="j000001" type="short">
+ <data key="nodelist"       value="-"/>
+ <data key="group"          value="unknown"/>
+ <data key="status"         value="UNDETERMINED"/>
+</info>
+</information>
+</lml:lgui>

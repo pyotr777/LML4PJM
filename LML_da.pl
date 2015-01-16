@@ -29,6 +29,7 @@ use LML_da_util;
 use LML_da_step;
 
 my $version="1.0";
+print STDOUT "LML_da stdout\n";
 
 # time measurement
 my ($tstart,$tdiff,$rc);
