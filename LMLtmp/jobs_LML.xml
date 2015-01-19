@@ -3,13 +3,12 @@
 	xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd"
 	version="1.1">
 <objects>
-<object id="j000001" name="-" type="job"/>
+<object id="j000001" name="75267" type="job"/>
 </objects>
 <information>
 <info oid="j000001" type="short">
- <data key="nodelist"       value="-"/>
- <data key="group"          value="unknown"/>
- <data key="status"         value="UNDETERMINED"/>
+ <data key="status"         value="RUN"/>
+ <data key="step"           value="75267"/>
 </info>
 </information>
 </lml:lgui>

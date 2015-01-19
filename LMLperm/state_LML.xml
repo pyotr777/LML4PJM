@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lml:lgui version="1.1"
+ xmlns:lml="http://eclipse.org/ptp/lml"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd"
+      >
+<objects>
+<object color="#FFFFFF" id="empty" name="Empty job" type="job"/>
+<object color="#2dbf8e" id="j000001" name="75267" type="job"/>
+<object color="#bf6d5f" id="sys000001" name="cluster" type="system"/>
+</objects>
+<information>
+<info oid="j000001" type="short">
+<data key="nodelist" value="-"/>
+<data key="status" value="RUN"/>
+<data key="step" value="75267"/>
+<data key="totaltasks" value="0"/>
+<data key="vnodelist" value="-"/>
+</info>
+<info oid="sys000001" type="short">
+<data key="hostname" value="fx02p08"/>
+<data key="motd" value="* *** SYSTEM Information ***&#10;*&#10;* Language Environment (Fortran/C/C++/MPI/Tools)&#10;* Latest Version : 1.2.1-08 (Released : Mar.07,2014)&#10;* P-id : T01641-03&#10;*&#10;* *** END Information ***&#10;"/>
+<data key="system_time" value="01/19/15-16:14:15"/>
+<data key="type" value="Cluster"/>
+</info>
+</information>
+<table  id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs" title="org.eclipse.ptp.rm.lml.ui.ActiveJobsView">
+<column id="1" name="accept" sort="alpha" description="unknown column" type="optional"/>
+<column id="10" name="total" sort="alpha" description="unknown column" type="optional"/>
+<column id="2" name="queued" sort="alpha" description="unknown column" type="optional"/>
+<column id="3" name="stgin" sort="alpha" description="unknown column" type="optional"/>
+<column id="4" name="ready" sort="alpha" description="unknown column" type="optional"/>
+<column id="5" name="running" sort="alpha" description="unknown column" type="optional"/>
+<column id="6" name="runout" sort="alpha" description="unknown column" type="optional"/>
+<column id="7" name="stgout" sort="alpha" description="unknown column" type="optional"/>
+<column id="8" name="hold" sort="alpha" description="unknown column" type="optional"/>
+<column id="9" name="error" sort="alpha" description="unknown column" type="optional"/>
+<row  oid="j000001">
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+<cell value="?"/>
+</row>
+</table>
+<tablelayout  id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenthint="jobs">
+<column cid="1" pos="1" width="0.1" active="true" key="accept"/>
+<column cid="2" pos="2" width="0.1" active="true" key="queued"/>
+<column cid="3" pos="3" width="0.1" active="true" key="stgin"/>
+<column cid="4" pos="4" width="0.1" active="true" key="ready"/>
+<column cid="5" pos="5" width="0.1" active="true" key="running"/>
+<column cid="6" pos="6" width="0.1" active="true" key="runout"/>
+<column cid="7" pos="7" width="0.1" active="true" key="stgout"/>
+<column cid="8" pos="8" width="0.1" active="true" key="hold"/>
+<column cid="9" pos="9" width="0.1" active="true" key="error"/>
+<column cid="10" pos="10" width="0.1" active="true" key="total"/>
+<column cid="11" pos="10" width="1" active="false" key="nodelist"/>
+<column cid="12" pos="11" width="1" active="false" key="status"/>
+<column cid="13" pos="12" width="1" active="false" key="step"/>
+<column cid="14" pos="13" width="1" active="false" key="totaltasks"/>
+<column cid="15" pos="14" width="1" active="false" key="vnodelist"/>
+</tablelayout>
+<nodedisplaylayout  id="nodedisplay" gid="nd_1">
+<el0 rows="8" maxlevel="2" cols="13">
+</el0>
+</nodedisplaylayout>
+<nodedisplay id="nd_1" title="system: fx02p08">
+<scheme>
+    <el1 tagname="node" min="0" max="95" mask="n%06d">
+        <el2 tagname="core" min="0" max="0" mask="-c%02d">
+        </el2>
+    </el1>
+</scheme>
+<data>
+    <el1 oid="empty" min="0" max="95">
+    </el1>
+</data>
+</nodedisplay>
+</lml:lgui>
