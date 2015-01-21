@@ -52,7 +52,7 @@ sub get_node_info {
 }
 
 sub update_job_info {
-	print colored ['red'], "LML_combine_obj_cluster:update_job_info\n";
+	print colored ['red'], "LML_combine_obj_cluster:update_job_info\n" if ($debug>0);
     my($dataptr) = shift;
     my($gpuoffsetref) = shift;
     my($id,$jobref,$spec,$node,$pos,$newnode,$newpos);

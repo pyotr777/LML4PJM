@@ -7,109 +7,106 @@
 <objects>
 <object color="#bf572d" id="j000001" name="75996" type="job"/>
 <object color="#2fc1c4" id="j000002" name="76134" type="job"/>
-<object color="#2d68bf" id="j000003" name="76195" type="job"/>
-<object color="#812fc4" id="j000004" name="76205" type="job"/>
-<object color="#4dbf2d" id="j000005" name="76219" type="job"/>
-<object color="#bac42f" id="j000006" name="76232" type="job"/>
-<object color="#2d60bf" id="j000007" name="76276" type="job"/>
-<object color="#c42f83" id="j000008" name="76281" type="job"/>
-<object color="#bf2672" id="nd000001" name="0xFF010010" type="node"/>
-<object color="#bf26b2" id="nd000002" name="0xFF010011" type="node"/>
-<object color="#bf7026" id="nd000003" name="0xFF010012" type="node"/>
-<object color="#bf4f26" id="nd000004" name="0xFF010013" type="node"/>
-<object color="#bf267c" id="nd000005" name="0xFF010014" type="node"/>
-<object color="#bf5626" id="nd000006" name="0xFF010015" type="node"/>
-<object color="#bf2826" id="nd000007" name="0xFF010016" type="node"/>
-<object color="#bf9326" id="nd000008" name="0xFF010017" type="node"/>
-<object color="#bf2693" id="nd000009" name="0xFF010018" type="node"/>
-<object color="#bcbf26" id="nd000010" name="0xFF010019" type="node"/>
-<object color="#bf2663" id="nd000011" name="0xFF01001A" type="node"/>
-<object color="#bf2654" id="nd000012" name="0xFF01001B" type="node"/>
-<object color="#bf7c26" id="nd000013" name="0xFF01001C" type="node"/>
-<object color="#bf2d26" id="nd000014" name="0xFF01001D" type="node"/>
-<object color="#bc26bf" id="nd000015" name="0xFF01001E" type="node"/>
-<object color="#bf7f26" id="nd000016" name="0xFF01001F" type="node"/>
-<object color="#bf268c" id="nd000017" name="0xFF010020" type="node"/>
+<object color="#2d63bf" id="j000003" name="76195" type="job"/>
+<object color="#812fc4" id="j000004" name="76232" type="job"/>
+<object color="#682dbf" id="j000005" name="76301" type="job"/>
+<object color="#bf2626" id="nd000001" name="0xFF010010" type="node"/>
+<object color="#bfaa26" id="nd000002" name="0xFF010011" type="node"/>
+<object color="#bf6326" id="nd000003" name="0xFF010012" type="node"/>
+<object color="#bf2632" id="nd000004" name="0xFF010013" type="node"/>
+<object color="#bf3f26" id="nd000005" name="0xFF010014" type="node"/>
+<object color="#bf26ad" id="nd000006" name="0xFF010015" type="node"/>
+<object color="#bf267c" id="nd000007" name="0xFF010016" type="node"/>
+<object color="#bfad26" id="nd000008" name="0xFF010017" type="node"/>
+<object color="#bf6626" id="nd000009" name="0xFF010018" type="node"/>
+<object color="#bf7026" id="nd000010" name="0xFF010019" type="node"/>
+<object color="#bf26b7" id="nd000011" name="0xFF01001A" type="node"/>
+<object color="#bfa026" id="nd000012" name="0xFF01001B" type="node"/>
+<object color="#bf262d" id="nd000013" name="0xFF01001C" type="node"/>
+<object color="#bf2649" id="nd000014" name="0xFF01001D" type="node"/>
+<object color="#bf2687" id="nd000015" name="0xFF01001E" type="node"/>
+<object color="#bf5426" id="nd000016" name="0xFF01001F" type="node"/>
+<object color="#bf267f" id="nd000017" name="0xFF010020" type="node"/>
 <object color="#bf2659" id="nd000018" name="0xFF010021" type="node"/>
-<object color="#bf6326" id="nd000019" name="0xFF010022" type="node"/>
-<object color="#bf263f" id="nd000020" name="0xFF010023" type="node"/>
-<object color="#bf7a26" id="nd000021" name="0xFF010024" type="node"/>
-<object color="#bf3a26" id="nd000022" name="0xFF010025" type="node"/>
-<object color="#bf2644" id="nd000023" name="0xFF010026" type="node"/>
-<object color="#bf2675" id="nd000024" name="0xFF010027" type="node"/>
-<object color="#bf9926" id="nd000025" name="0xFF010028" type="node"/>
-<object color="#bf26ba" id="nd000026" name="0xFF010029" type="node"/>
-<object color="#bf267f" id="nd000027" name="0xFF01002A" type="node"/>
-<object color="#bf3526" id="nd000028" name="0xFF01002B" type="node"/>
-<object color="#bf266d" id="nd000029" name="0xFF01002C" type="node"/>
-<object color="#bf2638" id="nd000030" name="0xFF01002D" type="node"/>
-<object color="#bf3826" id="nd000031" name="0xFF01002E" type="node"/>
-<object color="#bf2660" id="nd000032" name="0xFF01002F" type="node"/>
-<object color="#bf262d" id="nd000033" name="0xFF010030" type="node"/>
-<object color="#bf2626" id="nd000034" name="0xFF010031" type="node"/>
-<object color="#a0bf26" id="nd000035" name="0xFF010032" type="node"/>
-<object color="#b2bf26" id="nd000036" name="0xFF010033" type="node"/>
-<object color="#bf263a" id="nd000037" name="0xFF010034" type="node"/>
-<object color="#bf26bc" id="nd000038" name="0xFF010035" type="node"/>
-<object color="#adbf26" id="nd000039" name="0xFF010036" type="node"/>
-<object color="#bf4426" id="nd000040" name="0xFF010037" type="node"/>
-<object color="#bf4926" id="nd000041" name="0xFF010038" type="node"/>
-<object color="#bf262b" id="nd000042" name="0xFF010039" type="node"/>
-<object color="#b5bf26" id="nd000043" name="0xFF01003A" type="node"/>
-<object color="#bf26bf" id="nd000044" name="0xFF01003B" type="node"/>
-<object color="#bf2670" id="nd000045" name="0xFF01003C" type="node"/>
-<object color="#bf2696" id="nd000046" name="0xFF01003D" type="node"/>
-<object color="#bf4c26" id="nd000047" name="0xFF01003E" type="node"/>
-<object color="#bf8c26" id="nd000048" name="0xFF01003F" type="node"/>
-<object color="#bf2b26" id="nd000049" name="0xFF010040" type="node"/>
-<object color="#99bf26" id="nd000050" name="0xFF010041" type="node"/>
-<object color="#bf2682" id="nd000051" name="0xFF010042" type="node"/>
-<object color="#bfb726" id="nd000052" name="0xFF010043" type="node"/>
-<object color="#bfb526" id="nd000053" name="0xFF010044" type="node"/>
-<object color="#aabf26" id="nd000054" name="0xFF010045" type="node"/>
-<object color="#bfbf26" id="nd000055" name="0xFF010046" type="node"/>
-<object color="#bf269b" id="nd000056" name="0xFF010047" type="node"/>
-<object color="#bf8726" id="nd000057" name="0xFF010048" type="node"/>
-<object color="#bf2687" id="nd000058" name="0xFF010049" type="node"/>
-<object color="#bfa326" id="nd000059" name="0xFF01004A" type="node"/>
-<object color="#9ebf26" id="nd000060" name="0xFF01004B" type="node"/>
-<object color="#bf7226" id="nd000061" name="0xFF01004C" type="node"/>
-<object color="#bf2684" id="nd000062" name="0xFF01004D" type="node"/>
-<object color="#bf3326" id="nd000063" name="0xFF01004E" type="node"/>
-<object color="#bfbc26" id="nd000064" name="0xFF01004F" type="node"/>
-<object color="#bfba26" id="nd000065" name="0xFF010050" type="node"/>
-<object color="#a5bf26" id="nd000066" name="0xFF010051" type="node"/>
-<object color="#bf2632" id="nd000067" name="0xFF010052" type="node"/>
-<object color="#bf2642" id="nd000068" name="0xFF010053" type="node"/>
-<object color="#bf6026" id="nd000069" name="0xFF010054" type="node"/>
-<object color="#bfa026" id="nd000070" name="0xFF010055" type="node"/>
-<object color="#bf8926" id="nd000071" name="0xFF010056" type="node"/>
-<object color="#bf2630" id="nd000072" name="0xFF010057" type="node"/>
-<object color="#bf2651" id="nd000073" name="0xFF010058" type="node"/>
-<object color="#9bbf26" id="nd000074" name="0xFF010059" type="node"/>
-<object color="#bf5426" id="nd000075" name="0xFF01005A" type="node"/>
-<object color="#bf2628" id="nd000076" name="0xFF01005B" type="node"/>
-<object color="#bfb226" id="nd000077" name="0xFF01005C" type="node"/>
-<object color="#bf2689" id="nd000078" name="0xFF01005D" type="node"/>
-<object color="#bf267a" id="nd000079" name="0xFF01005E" type="node"/>
-<object color="#babf26" id="nd000080" name="0xFF01005F" type="node"/>
-<object color="#bf8226" id="nd000081" name="0xFF010060" type="node"/>
-<object color="#bf264c" id="nd000082" name="0xFF010061" type="node"/>
-<object color="#bf4226" id="nd000083" name="0xFF010062" type="node"/>
-<object color="#bf2635" id="nd000084" name="0xFF010063" type="node"/>
-<object color="#bf8e26" id="nd000085" name="0xFF010064" type="node"/>
-<object color="#bf5b26" id="nd000086" name="0xFF010065" type="node"/>
-<object color="#bf9126" id="nd000087" name="0xFF010066" type="node"/>
-<object color="#bf2677" id="nd000088" name="0xFF010067" type="node"/>
-<object color="#b7bf26" id="nd000089" name="0xFF010068" type="node"/>
-<object color="#bf263d" id="nd000090" name="0xFF010069" type="node"/>
-<object color="#bf265e" id="nd000091" name="0xFF01006A" type="node"/>
-<object color="#bf264f" id="nd000092" name="0xFF01006B" type="node"/>
-<object color="#bf26a0" id="nd000093" name="0xFF01006C" type="node"/>
-<object color="#bf5926" id="nd000094" name="0xFF01006D" type="node"/>
-<object color="#bf26a8" id="nd000095" name="0xFF01006E" type="node"/>
-<object color="#a3bf26" id="nd000096" name="0xFF01006F" type="node"/>
-<object color="#bf6c5f" id="sys000001" name="cluster" type="system"/>
+<object color="#bf2638" id="nd000019" name="0xFF010022" type="node"/>
+<object color="#bf264f" id="nd000020" name="0xFF010023" type="node"/>
+<object color="#bf2651" id="nd000021" name="0xFF010024" type="node"/>
+<object color="#bf8426" id="nd000022" name="0xFF010025" type="node"/>
+<object color="#bf268c" id="nd000023" name="0xFF010026" type="node"/>
+<object color="#bf3526" id="nd000024" name="0xFF010027" type="node"/>
+<object color="#bf269e" id="nd000025" name="0xFF010028" type="node"/>
+<object color="#babf26" id="nd000026" name="0xFF010029" type="node"/>
+<object color="#bf2666" id="nd000027" name="0xFF01002A" type="node"/>
+<object color="#bf7726" id="nd000028" name="0xFF01002B" type="node"/>
+<object color="#bf4926" id="nd000029" name="0xFF01002C" type="node"/>
+<object color="#bf7f26" id="nd000030" name="0xFF01002D" type="node"/>
+<object color="#bf3a26" id="nd000031" name="0xFF01002E" type="node"/>
+<object color="#bf3326" id="nd000032" name="0xFF01002F" type="node"/>
+<object color="#bf2691" id="nd000033" name="0xFF010030" type="node"/>
+<object color="#adbf26" id="nd000034" name="0xFF010031" type="node"/>
+<object color="#bf5926" id="nd000035" name="0xFF010032" type="node"/>
+<object color="#bf4426" id="nd000036" name="0xFF010033" type="node"/>
+<object color="#bf9e26" id="nd000037" name="0xFF010034" type="node"/>
+<object color="#bf5e26" id="nd000038" name="0xFF010035" type="node"/>
+<object color="#b5bf26" id="nd000039" name="0xFF010036" type="node"/>
+<object color="#bf269b" id="nd000040" name="0xFF010037" type="node"/>
+<object color="#bf2699" id="nd000041" name="0xFF010038" type="node"/>
+<object color="#bf8926" id="nd000042" name="0xFF010039" type="node"/>
+<object color="#bf268e" id="nd000043" name="0xFF01003A" type="node"/>
+<object color="#bf2663" id="nd000044" name="0xFF01003B" type="node"/>
+<object color="#bf5b26" id="nd000045" name="0xFF01003C" type="node"/>
+<object color="#bf2675" id="nd000046" name="0xFF01003D" type="node"/>
+<object color="#bf26bf" id="nd000047" name="0xFF01003E" type="node"/>
+<object color="#bf2642" id="nd000048" name="0xFF01003F" type="node"/>
+<object color="#bf6826" id="nd000049" name="0xFF010040" type="node"/>
+<object color="#bfbc26" id="nd000050" name="0xFF010041" type="node"/>
+<object color="#b726bf" id="nd000051" name="0xFF010042" type="node"/>
+<object color="#bf4c26" id="nd000052" name="0xFF010043" type="node"/>
+<object color="#9ebf26" id="nd000053" name="0xFF010044" type="node"/>
+<object color="#99bf26" id="nd000054" name="0xFF010045" type="node"/>
+<object color="#bfb726" id="nd000055" name="0xFF010046" type="node"/>
+<object color="#bf9326" id="nd000056" name="0xFF010047" type="node"/>
+<object color="#a5bf26" id="nd000057" name="0xFF010048" type="node"/>
+<object color="#bf2682" id="nd000058" name="0xFF010049" type="node"/>
+<object color="#bf267a" id="nd000059" name="0xFF01004A" type="node"/>
+<object color="#bfaf26" id="nd000060" name="0xFF01004B" type="node"/>
+<object color="#bf9b26" id="nd000061" name="0xFF01004C" type="node"/>
+<object color="#bf3026" id="nd000062" name="0xFF01004D" type="node"/>
+<object color="#bf2672" id="nd000063" name="0xFF01004E" type="node"/>
+<object color="#bf6d26" id="nd000064" name="0xFF01004F" type="node"/>
+<object color="#bf26ba" id="nd000065" name="0xFF010050" type="node"/>
+<object color="#bf2b26" id="nd000066" name="0xFF010051" type="node"/>
+<object color="#bf265e" id="nd000067" name="0xFF010052" type="node"/>
+<object color="#bf2696" id="nd000068" name="0xFF010053" type="node"/>
+<object color="#b2bf26" id="nd000069" name="0xFF010054" type="node"/>
+<object color="#a0bf26" id="nd000070" name="0xFF010055" type="node"/>
+<object color="#bf8e26" id="nd000071" name="0xFF010056" type="node"/>
+<object color="#bf9126" id="nd000072" name="0xFF010057" type="node"/>
+<object color="#bf5626" id="nd000073" name="0xFF010058" type="node"/>
+<object color="#ba26bf" id="nd000074" name="0xFF010059" type="node"/>
+<object color="#bf5126" id="nd000075" name="0xFF01005A" type="node"/>
+<object color="#bf2684" id="nd000076" name="0xFF01005B" type="node"/>
+<object color="#bf2668" id="nd000077" name="0xFF01005C" type="node"/>
+<object color="#bf8726" id="nd000078" name="0xFF01005D" type="node"/>
+<object color="#bf2654" id="nd000079" name="0xFF01005E" type="node"/>
+<object color="#bf6b26" id="nd000080" name="0xFF01005F" type="node"/>
+<object color="#bf263f" id="nd000081" name="0xFF010060" type="node"/>
+<object color="#bf2826" id="nd000082" name="0xFF010061" type="node"/>
+<object color="#bf2660" id="nd000083" name="0xFF010062" type="node"/>
+<object color="#bf262b" id="nd000084" name="0xFF010063" type="node"/>
+<object color="#bf26b5" id="nd000085" name="0xFF010064" type="node"/>
+<object color="#bfa326" id="nd000086" name="0xFF010065" type="node"/>
+<object color="#bf7c26" id="nd000087" name="0xFF010066" type="node"/>
+<object color="#bfa526" id="nd000088" name="0xFF010067" type="node"/>
+<object color="#bf2656" id="nd000089" name="0xFF010068" type="node"/>
+<object color="#bf2647" id="nd000090" name="0xFF010069" type="node"/>
+<object color="#bf263d" id="nd000091" name="0xFF01006A" type="node"/>
+<object color="#bfa826" id="nd000092" name="0xFF01006B" type="node"/>
+<object color="#bf3d26" id="nd000093" name="0xFF01006C" type="node"/>
+<object color="#bf4f26" id="nd000094" name="0xFF01006D" type="node"/>
+<object color="#a8bf26" id="nd000095" name="0xFF01006E" type="node"/>
+<object color="#bf26aa" id="nd000096" name="0xFF01006F" type="node"/>
+<object color="#bf645f" id="sys000001" name="cluster" type="system"/>
 </objects>
 <information>
 <info oid="j000001" type="short">
@@ -132,7 +129,7 @@
 </info>
 <info oid="j000003" type="short">
 <data key="nodelist" value="-"/>
-<data key="queuedate" value="01/22 11:00"/>
+<data key="queuedate" value="01-22 11:00:00"/>
 <data key="state" value="Idle"/>
 <data key="status" value="SUBMITTED"/>
 <data key="step" value="76195"/>
@@ -142,24 +139,6 @@
 <data key="wall" value="21600"/>
 </info>
 <info oid="j000004" type="short">
-<data key="queuedate" value="01-21 13:50:39"/>
-<data key="state" value="Running"/>
-<data key="status" value="RUNNING"/>
-<data key="step" value="76205"/>
-<data key="totalcores" value="6"/>
-<data key="vnodelist" value="(0xFF010064,16)(0xFF01006C,16)(0xFF010068,16)(0xFF01006B,16)(0xFF01006F,16)(0xFF010067,16)"/>
-<data key="wall" value="43200"/>
-</info>
-<info oid="j000005" type="short">
-<data key="queuedate" value="01-21 14:38:53"/>
-<data key="state" value="Running"/>
-<data key="status" value="RUNNING"/>
-<data key="step" value="76219"/>
-<data key="totalcores" value="12"/>
-<data key="vnodelist" value="(0xFF01004C,16)(0xFF010054,16)(0xFF010050,16)(0xFF010053,16)(0xFF010057,16)(0xFF01004F,16)(0xFF01004E,16)(0xFF010056,16)(0xFF010052,16)(0xFF010051,16)(0xFF010055,16)(0xFF01004D,16)"/>
-<data key="wall" value="21600"/>
-</info>
-<info oid="j000006" type="short">
 <data key="queuedate" value="01-21 15:09:01"/>
 <data key="state" value="Running"/>
 <data key="status" value="RUNNING"/>
@@ -168,58 +147,46 @@
 <data key="vnodelist" value="(0xFF010040,16)(0xFF010048,16)(0xFF010044,16)(0xFF010047,16)(0xFF01004B,16)(0xFF010043,16)(0xFF010042,16)(0xFF01004A,16)(0xFF010046,16)(0xFF010045,16)(0xFF010049,16)(0xFF010041,16)"/>
 <data key="wall" value="21600"/>
 </info>
-<info oid="j000007" type="short">
-<data key="queuedate" value="01-21 16:40:59"/>
-<data key="state" value="Running"/>
-<data key="status" value="RUNNING"/>
-<data key="step" value="76276"/>
-<data key="totalcores" value="8"/>
-<data key="vnodelist" value="(0xFF010018,16)(0xFF010018,16)(0xFF010010,16)(0xFF010010,16)(0xFF010014,16)(0xFF010014,16)(0xFF010017,16)(0xFF010017,16)(0xFF010013,16)(0xFF010013,16)(0xFF01001B,16)(0xFF01001B,16)(0xFF010012,16)(0xFF010012,16)(0xFF010011,16)(0xFF010011,16)"/>
-<data key="wall" value="14400"/>
-</info>
-<info oid="j000008" type="short">
-<data key="queuedate" value="01-21 16:56:50"/>
-<data key="state" value="Running"/>
-<data key="status" value="RUNNING"/>
-<data key="step" value="76281"/>
-<data key="totalcores" value="5"/>
-<data key="vnodelist" value="(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)"/>
-<data key="wall" value="1800"/>
+<info oid="j000005" type="short">
+<data key="nodelist" value="-"/>
+<data key="queuedate" value="01-22 17:30:00"/>
+<data key="state" value="Idle"/>
+<data key="status" value="SUBMITTED"/>
+<data key="step" value="76301"/>
+<data key="totalcores" value="12"/>
+<data key="totaltasks" value="0"/>
+<data key="vnodelist" value="-"/>
+<data key="wall" value="86400"/>
 </info>
 <info oid="nd000001" type="short">
 <data key="id" value="0xFF010010"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000002" type="short">
 <data key="id" value="0xFF010011"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000003" type="short">
 <data key="id" value="0xFF010012"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000004" type="short">
 <data key="id" value="0xFF010013"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000005" type="short">
 <data key="id" value="0xFF010014"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000006" type="short">
 <data key="id" value="0xFF010015"/>
@@ -235,17 +202,15 @@
 </info>
 <info oid="nd000008" type="short">
 <data key="id" value="0xFF010017"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000009" type="short">
 <data key="id" value="0xFF010018"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000010" type="short">
 <data key="id" value="0xFF010019"/>
@@ -261,17 +226,15 @@
 </info>
 <info oid="nd000012" type="short">
 <data key="id" value="0xFF01001B"/>
-<data key="jobs" value="76276"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000013" type="short">
 <data key="id" value="0xFF01001C"/>
-<data key="jobs" value="76281"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000014" type="short">
 <data key="id" value="0xFF01001D"/>
@@ -293,10 +256,9 @@
 </info>
 <info oid="nd000017" type="short">
 <data key="id" value="0xFF010020"/>
-<data key="jobs" value="76281"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000018" type="short">
 <data key="id" value="0xFF010021"/>
@@ -312,17 +274,15 @@
 </info>
 <info oid="nd000020" type="short">
 <data key="id" value="0xFF010023"/>
-<data key="jobs" value="76281"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000021" type="short">
 <data key="id" value="0xFF010024"/>
-<data key="jobs" value="76281"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000022" type="short">
 <data key="id" value="0xFF010025"/>
@@ -338,10 +298,9 @@
 </info>
 <info oid="nd000024" type="short">
 <data key="id" value="0xFF010027"/>
-<data key="jobs" value="76281"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000025" type="short">
 <data key="id" value="0xFF010028"/>
@@ -573,87 +532,75 @@
 </info>
 <info oid="nd000061" type="short">
 <data key="id" value="0xFF01004C"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000062" type="short">
 <data key="id" value="0xFF01004D"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000063" type="short">
 <data key="id" value="0xFF01004E"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000064" type="short">
 <data key="id" value="0xFF01004F"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000065" type="short">
 <data key="id" value="0xFF010050"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000066" type="short">
 <data key="id" value="0xFF010051"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000067" type="short">
 <data key="id" value="0xFF010052"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000068" type="short">
 <data key="id" value="0xFF010053"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000069" type="short">
 <data key="id" value="0xFF010054"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000070" type="short">
 <data key="id" value="0xFF010055"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000071" type="short">
 <data key="id" value="0xFF010056"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000072" type="short">
 <data key="id" value="0xFF010057"/>
-<data key="jobs" value="76219"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000073" type="short">
 <data key="id" value="0xFF010058"/>
@@ -741,10 +688,9 @@
 </info>
 <info oid="nd000085" type="short">
 <data key="id" value="0xFF010064"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000086" type="short">
 <data key="id" value="0xFF010065"/>
@@ -760,17 +706,15 @@
 </info>
 <info oid="nd000088" type="short">
 <data key="id" value="0xFF010067"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000089" type="short">
 <data key="id" value="0xFF010068"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000090" type="short">
 <data key="id" value="0xFF010069"/>
@@ -786,17 +730,15 @@
 </info>
 <info oid="nd000092" type="short">
 <data key="id" value="0xFF01006B"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000093" type="short">
 <data key="id" value="0xFF01006C"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="nd000094" type="short">
 <data key="id" value="0xFF01006D"/>
@@ -814,15 +756,14 @@
 </info>
 <info oid="nd000096" type="short">
 <data key="id" value="0xFF01006F"/>
-<data key="jobs" value="76205"/>
 <data key="ncores" value="16"/>
 <data key="physmem" value="29Gi"/>
-<data key="state" value="Running"/>
+<data key="state" value="Idle"/>
 </info>
 <info oid="sys000001" type="short">
 <data key="hostname" value="fx02p08"/>
 <data key="motd" value="* *** SYSTEM Information ***&#10;*&#10;* Language Environment (Fortran/C/C++/MPI/Tools)&#10;* Latest Version : 1.2.1-08 (Released : Mar.07,2014)&#10;* P-id : T01641-03&#10;*&#10;* *** END Information ***&#10;"/>
-<data key="system_time" value="01/21/15-16:57:00"/>
+<data key="system_time" value="01/21/15-17:51:44"/>
 <data key="type" value="Cluster"/>
 </info>
 </information>

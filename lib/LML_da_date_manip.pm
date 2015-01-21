@@ -41,6 +41,11 @@ sub date_to_stddate {
         $outdate=sprintf("%02d-%02d %02d:%02d:%02d",$mon,$mday,$hour,$min,$sec);
         return($outdate);
     }
+    if ($indate=~/^(\d\d)\/(\d\d)\s+(\d\d):(\d\d)/) {
+        ($mon,$mday,$hour,$min)=($1,$2,$3,$4);
+        $outdate=sprintf("%02d-%02d %02d:%02d:%02d",$mon,$mday,$hour,$min,"00");
+        return($outdate);
+    }
 
     print "ERROR: date_to_stddate: could not convert date  '$indate' -> ?\n";
     return($indate);

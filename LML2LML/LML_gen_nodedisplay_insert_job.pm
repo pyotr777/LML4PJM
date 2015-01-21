@@ -43,7 +43,7 @@ sub insert_job_into_nodedisplay  {
 
     # Transfer each node name of the nodelist to a list of ordering number for each level of the tree
     # according to the mask or map attribute in th escheme definition
-    print colored ['green'],"insert_job_into_nodedisplay $oid >$nodelist<\n";
+    print colored ['green'],"insert_job_into_nodedisplay $oid >$nodelist<\n" if ($debug>1);
     foreach $node (sort(split(/\s*,\s*/,$nodelist))) {
 	$listref=$self->get_numbers_from_name($node,$schemeref);
 	if(!defined($listref)) {
@@ -64,9 +64,9 @@ sub insert_job_into_nodedisplay  {
     
     # Debugging
     if($debug>=2) {
-	foreach $listref (@nodelistrefs) {
-	    print "insert_job_into_nodedisplay, before: ",join(',',@{$listref}),"\n"; 
-	}
+		foreach $listref (@nodelistrefs) {
+		    print "insert_job_into_nodedisplay, before: ",join(',',@{$listref}),"\n"; 
+		}
     }
 
     # Find and compress sets of nodenames, which covers a full subtree

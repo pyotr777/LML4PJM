@@ -380,6 +380,7 @@ sub _remap_nodes_vnode {
     if(($self->{SYSTEMTYPE} eq "BG/P") || ($self->{SYSTEMTYPE} eq "BG/Q") ){
 		return($nodelist);
     }
+    print colored ['magenta'], "NODELIST $nodelist\n" if ($debug>0);
     foreach $spec (split(/\),?\(/,$nodelist)) {
 		# change form '(node,number tasks)' to (node-c<num>, ...)
 		if ($spec=~/\(?([^,]+),(\d+)\)?/) {
@@ -391,7 +392,7 @@ sub _remap_nodes_vnode {
 		}
 		
 		$newnode = $self->_realnodename_to_virtualname($node);
-		print colored ['magenta'], "NODE name convertion: $node->$newnode\n";
+		print colored ['magenta'], "NODE name convertion: $node->$newnode\n" if ($debug>0);
 
 		if(!exists($self->{NODELASTTASKNUMBER}->{$node})) {
 		    $self->{NODELASTTASKNUMBER}->{$node}=-1;
