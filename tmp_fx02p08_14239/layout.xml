@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lml:lgui version="1.1"
+ xmlns:lml="http://eclipse.org/ptp/lml"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd "
+      >
+<objects>
+<object color="#FFFFFF" id="empty" name="Empty job" type="job"/>
+</objects>
+<information>
+</information>
+<table  id="nodelist" contenttype="nodes" description="This is the table contain all nodes of the system" title="Nodes">
+<column id="1" name="id" sort="alpha" type="mandatory"/>
+<column id="2" name="ncores"/>
+<column id="3" name="physmem" sort="alpha"/>
+</table>
+<table  id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs" description="This is the table showing all running jobs" title="Running">
+<column id="1" name="state"/>
+<column id="2" name="jid"/>
+<column id="3" name="totalcores"/>
+<column id="4" name="vnodelist"/>
+<column id="5" name="queuedate"/>
+<column id="6" name="wall"/>
+</table>
+<tablelayout  id="nodes" gid="nodelist" active="false">
+<column cid="1" pos="0" width="0.333333333333333" active="true" key="id"/>
+<column cid="2" pos="1" width="0.333333333333333" active="true" key="ncores"/>
+<column cid="3" pos="2" width="0.333333333333333" active="true" key="physmem"/>
+</tablelayout>
+<tablelayout  id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" active="true" contenthint="jobs">
+<column cid="1" pos="0" width="0.0909090909090909" active="true" key="state"/>
+<column cid="2" pos="1" width="0.0909090909090909" active="true" key="step"/>
+<column cid="3" pos="2" width="0.0909090909090909" active="true" key="totalcores"/>
+<column cid="4" pos="3" width="0.363636363636364" active="true" key="vnodelist"/>
+<column cid="5" pos="4" width="0.181818181818182" active="true" key="queuedate"/>
+<column cid="6" pos="5" width="0.181818181818182" active="true" key="wall"/>
+</tablelayout>
+<nodedisplaylayout  id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
+<schemehint>
+<el1 tagname="chassis" min="0" max="6" mask="0xFF0100%01d">
+    <el2 tagname="node" min="0" max="15" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
+        <el3 tagname="core" min="0" max="15" mask="-c%02d">
+        </el3>
+    </el2>
+</el1>
+</schemehint>
+<el0 vgap="5" showtitle="true" rows="7" maxlevel="3" cols="1">
+    <el1 vgap="5" showtitle="true" min="0" max="6" cols="1">
+        <el2 showtitle="true" min="0" max="15" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F" hgap="3" cols="16">
+            <el3 showtitle="true" min="0" max="15" mask="-c%02d">
+            </el3>
+        </el2>
+    </el1>
+</el0>
+</nodedisplaylayout>
+<nodedisplay id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" title="default">
+<scheme>
+<el1 tagname="chassis" min="0" max="6" mask="0xFF0100%01d">
+    <el2 tagname="node" min="0" max="15" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
+        <el3 tagname="core" min="0" max="15" mask="-c%02d">
+        </el3>
+    </el2>
+</el1>
+</scheme>
+</nodedisplay>
+</lml:lgui>

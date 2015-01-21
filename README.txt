@@ -60,7 +60,7 @@ LML is the XML format used to describe the machine status of the
 remote system. A more detailed description of that format can be found
 under:
 
-http://llview.zam.kfa-juelich.de/LML/OnlineDocumentation/lmldoc.html
+http://llview.fz-juelich.de/LML/OnlineDocumentation/lmldoc.html
 
 The structure of LML is specified with a XML schema definition file
 which is also available on that web page. In addition, also a

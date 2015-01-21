@@ -1,13 +1,13 @@
 LML_da_driver.pl: requestPath=-
-LML_da_driver.pl: parsing XML requestPath in 0.0019 sec
+LML_da_driver.pl: parsing XML requestPath in 0.0040 sec
 ------------------------------------------------------------------------------------------
-  LLVIEW Data Access Workflow Manager Driver 1.18, starting at (Thu Jan 15 16:29:51 JST 2015)
+  LLVIEW Data Access Workflow Manager Driver 1.18, starting at (Wed Jan 21 15:08:03 JST 2015)
    command line args: 
-   option file  args: nocheckrequest     (from file .LML_da_options)
-   final options used are: quiet=>0 verbose=>0 test=>0 tmpdir=>./tmp_fx02p08_13093 rawfile=> dump=>0 demo=>0 cachedir=>/tmp/LMLCache_fx02p08/ keepperm=>1 keeptmp=>0 rms=>undef cacheinterval=>60 permdir=>./perm_fx02p08 cache=>1 nocheckrequest=>1 
+   option file  args: nocheckrequest keeptmp     (from file .LML_da_options)
+   final options used are: quiet=>0 verbose=>0 test=>0 tmpdir=>./tmp_fx02p08_14239 rawfile=> dump=>0 demo=>0 cachedir=>/tmp/LMLCache_fx02p08/ keepperm=>1 keeptmp=>1 rms=>undef cacheinterval=>60 permdir=>./perm_fx02p08 cache=>1 nocheckrequest=>1 
 ------------------------------------------------------------------------------------------
-LML_da_driver.pl: temporary directory not found, create new directory ./tmp_fx02p08_13093 ...
-LML_da_driver.pl: tmpdir created (./tmp_fx02p08_13093)
+LML_da_driver.pl: temporary directory not found, create new directory ./tmp_fx02p08_14239 ...
+LML_da_driver.pl: tmpdir created (./tmp_fx02p08_14239)
 LML_da_driver.pl: A cache update is required, will perform raw data update
 LML_da_driver.pl: check request for rms hint ...
 LML_da_driver.pl: found rms/COBALT_BG/da_check_info_LML.pl running test ...
@@ -48,8 +48,9 @@ LML_da_driver.pl: rms/rms/PJM/da_check_info_LML.pl --> rms=PJM
 LML_da_driver.pl: layoutfound=0 usedefaultlayout=1
 LML_da_driver.pl: Waiting for cache mutex to be available
 LML_da_driver.pl: Entered cache mutex
-LML_da_driver.pl: executing: /usr/bin/perl ./LML_da.pl -c ./tmp_fx02p08_13093/workflow.xml > ./tmp_fx02p08_13093/LML_da.log 2> ./tmp_fx02p08_13093/LML_da.errlog ...
-LML_da_driver.pl:                                                              -> ready, time used       0.09s
+LML_da_driver.pl: executing: /usr/bin/perl ./LML_da.pl -c ./tmp_fx02p08_14239/workflow.xml > ./tmp_fx02p08_14239/LML_da.log 2> ./tmp_fx02p08_14239/LML_da.errlog ...
+LML_da_driver.pl:                                                              -> ready, time used       0.80s
 LML_da_driver.pl: Unlocked cache mutex
-LML_da_driver.pl: ERROR LML_da_driver.pl failed, no output generated in last step ... rc=0
-
+------------------------------------------------------------------------------------------
+  LLVIEW Data Access Workflow Manager Driver 1.18, ending at   (Wed Jan 21 15:08:03 JST 2015)
+------------------------------------------------------------------------------------------

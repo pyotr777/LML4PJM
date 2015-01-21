@@ -15,6 +15,7 @@ use strict;
 use Time::Local;
 use Time::HiRes qw ( time );
 use Data::Dumper;
+use Term::ANSIColor;
 
 
 ################################################################################################################
@@ -42,7 +43,7 @@ sub insert_job_into_nodedisplay  {
 
     # Transfer each node name of the nodelist to a list of ordering number for each level of the tree
     # according to the mask or map attribute in th escheme definition
-#    print "insert_job_into_nodedisplay $oid >$nodelist<\n";
+    print colored ['green'],"insert_job_into_nodedisplay $oid >$nodelist<\n";
     foreach $node (sort(split(/\s*,\s*/,$nodelist))) {
 	$listref=$self->get_numbers_from_name($node,$schemeref);
 	if(!defined($listref)) {
@@ -331,29 +332,34 @@ sub _reduce_nodelist {
 
     # Initialization
     for($nodenum=$schemeref->{ATTR}->{min};$nodenum<=$schemeref->{ATTR}->{max};$nodenum++) {
-	$covered[$nodenum]=0;
+		$covered[$nodenum]=0;
     }
 
     # check which treenodes are given in nodelist, 
     # for each node: 
     #  covered[.] = {0 no nodes, 1 all nodes, 2 some nodes}  
     foreach $listref (@{$nodelistrefs}) {
-	$nodenum=$listref->[0];
+		$nodenum=$listref->[0];
+		if (!defined $nodenum) {
+			print colored ['red'],"_reduce_nodelist: Nodenum not defined.\nlistref=\n";
+			print Dumpler $listref;
+			print colored ['red'],"========";
+			return;
+		}
+		# check only nodes which are described by this subtree of the scheme
+		next if($nodenum<$schemeref->{ATTR}->{min});
+		next if($nodenum>$schemeref->{ATTR}->{max});
+		if($#{$listref}==0) {
+		    $covered[$nodenum]=1; # node full covered
+		    print "_reduce_nodelist: $xspace # nodenum=$nodenum full covered (",join(',',@{$listref}),")\n" if($debug>=2); 
+		} else {
+		    my(@list);
+		    $covered[$nodenum]=2 if($covered[$nodenum]==0);
+		    print "_reduce_nodelist: $xspace # nodenum=$nodenum not full covered, rescan on sub-level (",join(',',@{$listref}),")\n" if($debug>=2); 
 
-	# check only nodes which are described by this subtree of the scheme
-	next if($nodenum<$schemeref->{ATTR}->{min});
-	next if($nodenum>$schemeref->{ATTR}->{max});
-	if($#{$listref}==0) {
-	    $covered[$nodenum]=1; # node full covered
-	    print "_reduce_nodelist: $xspace # nodenum=$nodenum full covered (",join(',',@{$listref}),")\n" if($debug>=2); 
-	} else {
-	    my(@list);
-	    $covered[$nodenum]=2 if($covered[$nodenum]==0);
-	    print "_reduce_nodelist: $xspace # nodenum=$nodenum not full covered, rescan on sub-level (",join(',',@{$listref}),")\n" if($debug>=2); 
-
-	    # remove top elem and add it to sublist
-	    @list=@{$listref};shift(@list);push(@{$shortlists[$nodenum]},\@list);
-	}
+		    # remove top elem and add it to sublist
+		    @list=@{$listref};shift(@list);push(@{$shortlists[$nodenum]},\@list);
+		}
     }
 
     # check childs of all nodes which are not fully covered
@@ -626,11 +632,14 @@ sub get_numbers_from_name  {
    
     # check for each child recursively if nodename matches to this tree
     foreach $child (@{$schemeref->{_childs}}) {
-	$listref=$self->_get_numbers_from_name($child,$name);
-	last if(defined($listref)); 
+		$listref=$self->_get_numbers_from_name($child,$name);
+		last if(defined($listref)); 
     }
     if(!defined($listref)) {
-	print "get_numbers_from_name: not found >$name<\n";
+		print "get_numbers_from_name: not found >$name<\n";
+		print "name=$name; schemeref->{_childs}=\n";
+		print Dumper $schemeref->{_childs};
+		print "---\n";
     }
     return($listref);
 }
@@ -662,29 +671,29 @@ sub _get_numbers_from_name {
     $rg=$schemeref->{ATTR}->{_maskregall};
 
     # ready if nodename matches to this level 
-#    print "get_numbers_from_name: check on level ",$schemeref->{_level}+1," $name -> $rg subcheck ",$name=~/^$rg/,"\n" if($debug>=2); 
+	print "get_numbers_from_name: check on level ",$schemeref->{_level}+1," $name -> $rg subcheck ",$name=~/^$rg/,"\n" if($debug>=2); 
     if($name=~/^$rg$/) {
-	@list=$name=~/^$rg$/;
-	print "get_numbers_from_name: found on level ",$schemeref->{_level}+1," $name -> ",join(',',@list),"\n" if($debug>=2); 
-	$listref=\@list;
-	return(\@list);
+		@list=$name=~/^$rg$/;
+		print "get_numbers_from_name: found on level ",$schemeref->{_level}+1," $name -> ",join(',',@list),"\n" if($debug>=2); 
+		$listref=\@list;
+		return(\@list);
     } else {
-	# search if nodename matches for one of the child nodes
-	foreach $child (@{$schemeref->{_childs}}) {
-	    $listref=$self->_get_numbers_from_name($child,$name);
-	    last if(defined($listref)); 
-	}
+		# search if nodename matches for one of the child nodes
+		foreach $child (@{$schemeref->{_childs}}) {
+		    $listref=$self->_get_numbers_from_name($child,$name);
+		    last if(defined($listref)); 
+		}
     }
 
     # remap strings to number on that level if map attribute is used instead of mask
     # mapping is given as an hash attached to this tree node 
     if(defined($listref)) {
-	if(exists($schemeref->{ATTR}->{_map})) {
-	    if(exists($schemeref->{ATTR}->{_map}->{$listref->[$schemeref->{_level}-1]})) {
-		$listref->[$schemeref->{_level}-1]=$schemeref->{ATTR}->{_map}->{$listref->[$schemeref->{_level}-1]};
-	    }
-	    
-	}
+		if(exists($schemeref->{ATTR}->{_map})) {
+		    if(exists($schemeref->{ATTR}->{_map}->{$listref->[$schemeref->{_level}-1]})) {
+				$listref->[$schemeref->{_level}-1]=$schemeref->{ATTR}->{_map}->{$listref->[$schemeref->{_level}-1]};
+		    }
+		    
+		}
     }
     
     return($listref);

@@ -8,16 +8,13 @@
 <object id="j000003" name="76195" type="job"/>
 <object id="j000004" name="76205" type="job"/>
 <object id="j000005" name="76219" type="job"/>
-<object id="j000006" name="76232" type="job"/>
-<object id="j000007" name="76276" type="job"/>
-<object id="j000008" name="76281" type="job"/>
+<object id="j000006" name="76230" type="job"/>
 </objects>
 <information>
 <info oid="j000001" type="short">
  <data key="wall"           value="86400"/>
  <data key="state"          value="Running"/>
  <data key="queuedate"      value="01/21 00:22:45"/>
- <data key="status"         value="RUNNING"/>
  <data key="step"           value="75996"/>
  <data key="totalcores"     value="12"/>
  <data key="vnodelist"      value="(0xFF010058,16)(0xFF010060,16)(0xFF01005C,16)(0xFF01005F,16)(0xFF010063,16)(0xFF01005B,16)(0xFF01005A,16)(0xFF010062,16)(0xFF01005E,16)(0xFF01005D,16)(0xFF010061,16)(0xFF010059,16)"/>
@@ -26,7 +23,6 @@
  <data key="wall"           value="86400"/>
  <data key="state"          value="Running"/>
  <data key="queuedate"      value="01/21 10:36:02"/>
- <data key="status"         value="RUNNING"/>
  <data key="step"           value="76134"/>
  <data key="totalcores"     value="2"/>
  <data key="vnodelist"      value="(0xFF01006E,16)(0xFF01006D,16)"/>
@@ -34,16 +30,14 @@
 <info oid="j000003" type="short">
  <data key="wall"           value="21600"/>
  <data key="state"          value="Idle"/>
- <data key="queuedate"      value="01/22 11:00"/>
- <data key="status"         value="SUBMITTED"/>
+ <data key="queuedate"      value="(01/22 11:00)"/>
  <data key="step"           value="76195"/>
  <data key="totalcores"     value="64"/>
 </info>
 <info oid="j000004" type="short">
  <data key="wall"           value="43200"/>
  <data key="state"          value="Running"/>
- <data key="queuedate"      value="01/21 13:50:39"/>
- <data key="status"         value="RUNNING"/>
+ <data key="queuedate"      value="01/21 13:50:39<"/>
  <data key="step"           value="76205"/>
  <data key="totalcores"     value="6"/>
  <data key="vnodelist"      value="(0xFF010064,16)(0xFF01006C,16)(0xFF010068,16)(0xFF01006B,16)(0xFF01006F,16)(0xFF010067,16)"/>
@@ -51,38 +45,18 @@
 <info oid="j000005" type="short">
  <data key="wall"           value="21600"/>
  <data key="state"          value="Running"/>
- <data key="queuedate"      value="01/21 14:38:53"/>
- <data key="status"         value="RUNNING"/>
+ <data key="queuedate"      value="01/21 14:38:53<"/>
  <data key="step"           value="76219"/>
  <data key="totalcores"     value="12"/>
  <data key="vnodelist"      value="(0xFF01004C,16)(0xFF010054,16)(0xFF010050,16)(0xFF010053,16)(0xFF010057,16)(0xFF01004F,16)(0xFF01004E,16)(0xFF010056,16)(0xFF010052,16)(0xFF010051,16)(0xFF010055,16)(0xFF01004D,16)"/>
 </info>
 <info oid="j000006" type="short">
- <data key="wall"           value="21600"/>
- <data key="state"          value="Running"/>
- <data key="queuedate"      value="01/21 15:09:01"/>
- <data key="status"         value="RUNNING"/>
- <data key="step"           value="76232"/>
- <data key="totalcores"     value="12"/>
- <data key="vnodelist"      value="(0xFF010040,16)(0xFF010048,16)(0xFF010044,16)(0xFF010047,16)(0xFF01004B,16)(0xFF010043,16)(0xFF010042,16)(0xFF01004A,16)(0xFF010046,16)(0xFF010045,16)(0xFF010049,16)(0xFF010041,16)"/>
-</info>
-<info oid="j000007" type="short">
- <data key="wall"           value="14400"/>
- <data key="state"          value="Running"/>
- <data key="queuedate"      value="01/21 16:40:59"/>
- <data key="status"         value="RUNNING"/>
- <data key="step"           value="76276"/>
- <data key="totalcores"     value="8"/>
- <data key="vnodelist"      value="(0xFF010018,16)(0xFF010018,16)(0xFF010010,16)(0xFF010010,16)(0xFF010014,16)(0xFF010014,16)(0xFF010017,16)(0xFF010017,16)(0xFF010013,16)(0xFF010013,16)(0xFF01001B,16)(0xFF01001B,16)(0xFF010012,16)(0xFF010012,16)(0xFF010011,16)(0xFF010011,16)"/>
-</info>
-<info oid="j000008" type="short">
  <data key="wall"           value="1800"/>
  <data key="state"          value="Running"/>
- <data key="queuedate"      value="01/21 16:56:50"/>
- <data key="status"         value="RUNNING"/>
- <data key="step"           value="76281"/>
- <data key="totalcores"     value="5"/>
- <data key="vnodelist"      value="(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)(0xFF010024,16)"/>
+ <data key="queuedate"      value="01/21 15:02:20<"/>
+ <data key="step"           value="76230"/>
+ <data key="totalcores"     value="1"/>
+ <data key="vnodelist"      value="(0xFF010031,16)"/>
 </info>
 </information>
 </lml:lgui>

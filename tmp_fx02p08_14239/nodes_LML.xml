@@ -103,38 +103,33 @@
 <information>
 <info oid="nd000001" type="short">
  <data key="id"             value="0xFF010010"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000002" type="short">
  <data key="id"             value="0xFF010011"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000003" type="short">
  <data key="id"             value="0xFF010012"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000004" type="short">
  <data key="id"             value="0xFF010013"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000005" type="short">
  <data key="id"             value="0xFF010014"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000006" type="short">
  <data key="id"             value="0xFF010015"/>
@@ -150,17 +145,15 @@
 </info>
 <info oid="nd000008" type="short">
  <data key="id"             value="0xFF010017"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000009" type="short">
  <data key="id"             value="0xFF010018"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000010" type="short">
  <data key="id"             value="0xFF010019"/>
@@ -176,17 +169,15 @@
 </info>
 <info oid="nd000012" type="short">
  <data key="id"             value="0xFF01001B"/>
- <data key="jobs"           value="76276"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000013" type="short">
  <data key="id"             value="0xFF01001C"/>
- <data key="jobs"           value="76281"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000014" type="short">
  <data key="id"             value="0xFF01001D"/>
@@ -208,10 +199,9 @@
 </info>
 <info oid="nd000017" type="short">
  <data key="id"             value="0xFF010020"/>
- <data key="jobs"           value="76281"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000018" type="short">
  <data key="id"             value="0xFF010021"/>
@@ -227,17 +217,15 @@
 </info>
 <info oid="nd000020" type="short">
  <data key="id"             value="0xFF010023"/>
- <data key="jobs"           value="76281"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000021" type="short">
  <data key="id"             value="0xFF010024"/>
- <data key="jobs"           value="76281"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000022" type="short">
  <data key="id"             value="0xFF010025"/>
@@ -253,10 +241,9 @@
 </info>
 <info oid="nd000024" type="short">
  <data key="id"             value="0xFF010027"/>
- <data key="jobs"           value="76281"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000025" type="short">
  <data key="id"             value="0xFF010028"/>
@@ -314,9 +301,10 @@
 </info>
 <info oid="nd000034" type="short">
  <data key="id"             value="0xFF010031"/>
+ <data key="jobs"           value="76230"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Idle"/>
+ <data key="state"          value="Running"/>
 </info>
 <info oid="nd000035" type="short">
  <data key="id"             value="0xFF010032"/>
@@ -404,87 +392,75 @@
 </info>
 <info oid="nd000049" type="short">
  <data key="id"             value="0xFF010040"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000050" type="short">
  <data key="id"             value="0xFF010041"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000051" type="short">
  <data key="id"             value="0xFF010042"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000052" type="short">
  <data key="id"             value="0xFF010043"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000053" type="short">
  <data key="id"             value="0xFF010044"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000054" type="short">
  <data key="id"             value="0xFF010045"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000055" type="short">
  <data key="id"             value="0xFF010046"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000056" type="short">
  <data key="id"             value="0xFF010047"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000057" type="short">
  <data key="id"             value="0xFF010048"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000058" type="short">
  <data key="id"             value="0xFF010049"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000059" type="short">
  <data key="id"             value="0xFF01004A"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000060" type="short">
  <data key="id"             value="0xFF01004B"/>
- <data key="jobs"           value="76232"/>
  <data key="ncores"         value="16"/>
  <data key="physmem"        value="29Gi"/>
- <data key="state"          value="Running"/>
+ <data key="state"          value="Idle"/>
 </info>
 <info oid="nd000061" type="short">
  <data key="id"             value="0xFF01004C"/>

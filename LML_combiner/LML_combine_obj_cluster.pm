@@ -11,6 +11,7 @@
 package LML_combine_obj_cluster;
 use strict;
 use Data::Dumper;
+use Term::ANSIColor;
 
 my($debug)=0;
 
@@ -39,57 +40,64 @@ sub get_node_info {
 
     # scan for gpus
     foreach $id (keys(%{$dataptr->{OBJECT}})) {
-	if($dataptr->{OBJECT}->{$id}->{type} eq "node") {
-	    $name=$dataptr->{OBJECT}->{$id}->{name};
-	    $ncores=$dataptr->{INFODATA}->{$id}->{ncores};
-	    if(exists($dataptr->{INFODATA}->{$id}->{gpus})) {
-		$gpuoffsetref->{$name}=$ncores;
-	    }
-	}
+		if($dataptr->{OBJECT}->{$id}->{type} eq "node") {
+		    $name=$dataptr->{OBJECT}->{$id}->{name};
+		    $ncores=$dataptr->{INFODATA}->{$id}->{ncores};
+		    if(exists($dataptr->{INFODATA}->{$id}->{gpus})) {
+				$gpuoffsetref->{$name}=$ncores;
+		    }
+		}
     }
     return();
 }
 
 sub update_job_info {
+	print colored ['red'], "LML_combine_obj_cluster:update_job_info\n";
     my($dataptr) = shift;
     my($gpuoffsetref) = shift;
     my($id,$jobref,$spec,$node,$pos,$newnode,$newpos);
     
     # update job info
-    foreach $id (keys(%{$dataptr->{OBJECT}})) {
-	if($dataptr->{OBJECT}->{$id}->{type} eq "job") {
-	    $jobref=$dataptr->{INFODATA}->{$id};
-	    
-	    # update nodelist 
-	    if($jobref->{state} ne "Running") {
-		if(!exists($jobref->{nodelist})) {
-		    $jobref->{nodelist}="-";
-		    $jobref->{totaltasks}=0;
-		}
-		if(!exists($jobref->{vnodelist})) {
-		    $jobref->{vnodelist}="-";
-		}
-	    }
-	    # update totalcores
-	    if(!exists($jobref->{totalcores})) {
-		print "update_job_info: could not find attributes for job $id to compute totalcores\n";
-	    }
-	    
-	    if($jobref->{state} eq "Running") {
-		
-		if(exists($jobref->{gpulist})) {
-		    foreach $spec (split(/\),?\(/,$jobref->{gpulist})) {
-			if($spec=~/\(?([^,]+),(\d+)\)?/) {
-			    $node=$1;$pos=$2;
-			    $newnode=$node;$newnode=~s/\-gpu$//s;
-			    $newpos=$gpuoffsetref->{$newnode}+$pos;
-			    $jobref->{nodelist}.="($newnode,$newpos)";
-#			    $jobref->{nodelist}.="($node,$pos)";
-			}
+    foreach $id (keys(%{$dataptr->{OBJECT}})) {    	
+    	if($dataptr->{OBJECT}->{$id}->{type} eq "job") {
+		    $jobref=$dataptr->{INFODATA}->{$id};
+		    if (!exists $jobref->{state}) {
+		    	print colored ['green'], "ID=";
+		    	print Dumper $jobref;
+		    	print colored ['green'], "\nINFODATA: -----\n";     
+    			print Dumper $dataptr->{INFODATA};
+    			print colored ['green'], "---------------\n";
+		    }
+		    # update nodelist 
+		    if($jobref->{state} ne "Running") {
+				if(!exists($jobref->{nodelist})) {
+				    $jobref->{nodelist}="-";
+				    $jobref->{totaltasks}=0;
+				}
+				if(!exists($jobref->{vnodelist})) {
+				    $jobref->{vnodelist}="-";
+				}
+		    }
+		    # update totalcores
+		    if(!exists($jobref->{totalcores})) {
+				print "update_job_info: could not find attributes for job $id to compute totalcores\n";
+		    }
+		    
+		    if($jobref->{state} eq "Running") {
+			
+				if(exists($jobref->{gpulist})) {
+					    foreach $spec (split(/\),?\(/,$jobref->{gpulist})) {
+						if($spec=~/\(?([^,]+),(\d+)\)?/) {
+						    $node=$1;$pos=$2;
+						    $newnode=$node;$newnode=~s/\-gpu$//s;
+						    $newpos=$gpuoffsetref->{$newnode}+$pos;
+						    $jobref->{nodelist}.="($newnode,$newpos)";
+			#			    $jobref->{nodelist}.="($node,$pos)";
+						}
+				    }
+				}
 		    }
 		}
-	    }
-	}
     }
     return(1);
 }

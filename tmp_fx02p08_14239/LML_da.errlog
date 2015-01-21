@@ -1,0 +1,13 @@
+  LML Data Access Workflow Manager 1.0, starting at (Wed Jan 21 15:08:04 JST 2015)
+LML_file_obj: read  XML in 0.0007 sec
+LML_file_obj: parse XML in 0.0205 sec
+LML_file_obj: read  XML in 0.0004 sec
+LML_file_obj: parse XML in 0.0019 sec
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+Use of uninitialized value in string ne at /volume/home/peterbryz/.eclipsesettings/LML2LML/./LML_gen_nodedisplay.pm line 203.
+LML_file_obj: wrote  XML in 0.0018 sec to ./tmp_fx02p08_14239/datastep_LML2LML.xml
+  LML Data Access Workflow Manager 1.0, ending at   (Wed Jan 21 15:08:04 JST 2015)

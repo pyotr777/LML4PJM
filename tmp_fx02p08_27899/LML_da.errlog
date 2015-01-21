@@ -1,4 +1,0 @@
-  LML Data Access Workflow Manager 1.0, starting at (Thu Jan 15 17:09:03 JST 2015)
-Undefined subroutine &main::escapeForXML called at rms/PJM/da_system_info_LML.pl line 129.
-failed executing: CMD_JOBINFO=/usr/bin/pjstat CMD_NODEINFO=/usr/bin/pjshowrsc /usr/bin/perl rms/PJM/da_system_info_LML.pl ./tmp_fx02p08_27899/sysinfo_LML.xml rc=6400
-  LML Data Access Workflow Manager 1.0, ending at   (Thu Jan 15 17:09:03 JST 2015)
