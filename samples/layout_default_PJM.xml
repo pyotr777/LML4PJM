@@ -16,7 +16,7 @@
     </objects>
     <nodedisplay title="default" id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView">
         <scheme>
-            <el1 min="0" max="6" tagname="chassis" mask="0xFF0100%01d">
+            <el1 min="0" max="6" tagname="rack" mask="0xFF0100%01d">
                 <el2 min="0" max="15" tagname="node" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
                     <el3 tagname="core" min="0" max="15" mask="-c%02d"></el3>
                 </el2>
@@ -26,14 +26,14 @@
 
     <nodedisplaylayout id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
         <schemehint>
-            <el1 min="0" max="6" tagname="chassis" mask="0xFF0100%01d">
+            <el1 min="0" max="6" tagname="rack" mask="0xFF0100%01d">
                 <el2 min="0" max="15" tagname="node" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
                     <el3 tagname="core" min="0" max="15" mask="-c%02d"></el3>
                 </el2>
             </el1>
         </schemehint>
-        <el0 rows="7" cols="1" maxlevel="3" vgap="5" showtitle="true">
-            <el1 min="0" max="6" cols="1" showtitle="true" vgap="5">
+        <el0 rows="7" cols="1" maxlevel="3" vgap="3" showtitle="true">
+            <el1 min="0" max="6" cols="2" showtitle="true" vgap="1">
                 <el2 min="0" max="15" cols="16" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F" showtitle="true" hgap="3">
                     <el3 min="0" max="15" mask="-c%02d" showtitle="true" ></el3>
                 </el2>
@@ -48,6 +48,7 @@
         <column cid="4" pos="4" width="0.4" active="true" key="vnodelist" />
         <column cid="5" pos="5" width="0.2" active="true" key="queuedate" />
         <column cid="6" pos="6" width="0.2" active="true" key="wall" />
+        <column cid="7" pos="7" width="0.5" active="true" key="comment" />
     </tablelayout>
 
     <table title="Running" id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs" description="This is the table showing all running jobs">
@@ -57,6 +58,7 @@
         <column id="4" name="vnodelist" />
         <column id="5" name="queuedate" />
         <column id="6" name="wall" />
+        <column id="7" name="Full state" />
     </table>
 
 

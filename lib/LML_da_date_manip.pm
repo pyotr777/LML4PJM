@@ -32,21 +32,10 @@ sub date_to_stddate {
     } 
 
     if($indate=~/^\w\w\w\s+(\w\w\w)\s+(\d+)\s+(\d\d):(\d\d):(\d\d)\s+(CEST)\s+(\d\d\d\d)$/) {
-    	($sec,$min,$hour,$mday,$mon,$year)=($5,$4,$3,$2,$1,$7);
-    	$outdate=sprintf("%04d-%02d-%02d %02d:%02d:%02d",$year,$monthmap{$mon},$mday,$hour,$min,$sec);
-    	return($outdate);
+	($sec,$min,$hour,$mday,$mon,$year)=($5,$4,$3,$2,$1,$7);
+	$outdate=sprintf("%04d-%02d-%02d %02d:%02d:%02d",$year,$monthmap{$mon},$mday,$hour,$min,$sec);
+	return($outdate);
     } 
-    if ($indate=~/^(\d\d)\/(\d\d)\s+(\d\d):(\d\d):(\d\d)/) {
-        ($mon,$mday,$hour,$min,$sec)=($1,$2,$3,$4,$5);
-        $outdate=sprintf("%02d-%02d %02d:%02d:%02d",$mon,$mday,$hour,$min,$sec);
-        return($outdate);
-    }
-    if ($indate=~/^(\d\d)\/(\d\d)\s+(\d\d):(\d\d)/) {
-        ($mon,$mday,$hour,$min)=($1,$2,$3,$4);
-        $outdate=sprintf("%02d-%02d %02d:%02d:%02d",$mon,$mday,$hour,$min,"00");
-        return($outdate);
-    }
-
     print "ERROR: date_to_stddate: could not convert date  '$indate' -> ?\n";
     return($indate);
 }

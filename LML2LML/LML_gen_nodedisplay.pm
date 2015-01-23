@@ -17,7 +17,6 @@ use strict;
 use Data::Dumper;
 use Time::Local;
 use Time::HiRes qw ( time );
-use Term::ANSIColor;
 #use String::Scanf;
 use FindBin;
 use lib "$FindBin::RealBin/../lib";
@@ -199,24 +198,24 @@ sub _insert_run_jobs {
     $tstart=time;$jcount=0;
     keys(%{$self->{LMLFH}->{DATA}->{OBJECT}}); # reset iterator
     while(($key,$ref)=each(%{$self->{LMLFH}->{DATA}->{OBJECT}})) {
-		next if($ref->{type} ne 'job');
-		$inforef=$self->{LMLFH}->{DATA}->{INFODATA}->{$key};
-		next if($inforef->{status} ne 'RUNNING');
-		if(exists($inforef->{vnodelist})) {
-		    $nodelist=$self->_remap_nodes_vnode($inforef->{vnodelist});
-		} else {
-		    $nodelist=$self->_remap_nodes($inforef->{nodelist});
-		}
-	#	print "_insert_run_jobs job $key \n" if($self->{VERBOSE});
-		$self->insert_job_into_nodedisplay($self->{SCHEMEROOT},$self->{DATAROOT},$nodelist,$key);
-		push(@idlist,$key);
-		$jcount++;
-		if($jcount%10==0) {
-		    $tdiff=time-$tstart;
-		    printf("$0: inserted %d jobs in %6.4f sec\n",$jcount,$tdiff) if($self->{VERBOSE});
-		}
+	next if($ref->{type} ne 'job');
+	$inforef=$self->{LMLFH}->{DATA}->{INFODATA}->{$key};
+	next if($inforef->{status} ne 'RUNNING');
+	if(exists($inforef->{vnodelist})) {
+	    $nodelist=$self->_remap_nodes_vnode($inforef->{vnodelist});
+	} else {
+	    $nodelist=$self->_remap_nodes($inforef->{nodelist});
+	}
+#	print "_insert_run_jobs job $key \n" if($self->{VERBOSE});
+	$self->insert_job_into_nodedisplay($self->{SCHEMEROOT},$self->{DATAROOT},$nodelist,$key);
+	push(@idlist,$key);
+	$jcount++;
+	if($jcount%10==0) {
+	    $tdiff=time-$tstart;
+	    printf("$0: inserted %d jobs in %6.4f sec\n",$jcount,$tdiff) if($self->{VERBOSE});
+	}
 
-	#	last; # WF
+#	last; # WF
     }
     $tdiff=time-$tstart;
     printf("$0: inserted %d jobs in %6.4f sec\n",$jcount,$tdiff) if($self->{VERBOSE});
@@ -378,43 +377,41 @@ sub _remap_nodes_vnode {
     my($nodelist)=shift;
     my($newnodelist,$spec,$node,$num,$number,$newnode,$start,$generatelist);
     if(($self->{SYSTEMTYPE} eq "BG/P") || ($self->{SYSTEMTYPE} eq "BG/Q") ){
-		return($nodelist);
+	return($nodelist);
     }
-    print colored ['magenta'], "NODELIST $nodelist\n" if ($debug>0);
     foreach $spec (split(/\),?\(/,$nodelist)) {
-		# change form '(node,number tasks)' to (node-c<num>, ...)
-		if ($spec=~/\(?([^,]+),(\d+)\)?/) {
-		    $node=$1;$number=$2;
-		} elsif($spec=~/^([^,]+)$/) {
-		    $node=$1;$number=0;	
-		} else {
-		    print "ERROR: _remap_nodes: unknown node in spec '$spec', skipping\n";
-		}
-		
-		$newnode = $self->_realnodename_to_virtualname($node);
-		print colored ['magenta'], "NODE name convertion: $node->$newnode\n" if ($debug>0);
-
-		if(!exists($self->{NODELASTTASKNUMBER}->{$node})) {
-		    $self->{NODELASTTASKNUMBER}->{$node}=-1;
-		}
-		$start=$self->{NODELASTTASKNUMBER}->{$node}+1;
-		# Store last task number
-		$self->{NODELASTTASKNUMBER}->{$node} = $start+$number-1;
-		 
-		$generatelist=1;
-		if (exists($self->{MAXCORESCHECK})) {
-		    if($number==$self->{MAXCORESCHECK}+1) {
-				$newnodelist.="," if($newnodelist);
-				$newnodelist.=$newnode;
-				$generatelist=0;
-		    } 
-		}
-		if ($generatelist) {
-		    for($num=$start;$num<$start+$number;$num++) {
-				$newnodelist.="," if($newnodelist);
-				$newnodelist.=sprintf("%s-c%02d",$newnode,$num);
-		    }
-		}
+	# change form '(node,number tasks)' to (node-c<num>, ...)
+	if($spec=~/\(?([^,]+),(\d+)\)?/) {
+	    $node=$1;$number=$2;
+	} elsif($spec=~/^([^,]+)$/) {
+	    $node=$1;$number=0;	
+	} else {
+	    print "ERROR: _remap_nodes: unknown node in spec '$spec', skipping\n";
+	}
+	
+	$newnode = $self->_realnodename_to_virtualname($node);
+	
+	if(!exists($self->{NODELASTTASKNUMBER}->{$node})) {
+	    $self->{NODELASTTASKNUMBER}->{$node}=-1;
+	}
+	$start=$self->{NODELASTTASKNUMBER}->{$node}+1;
+	# Store last task number
+	$self->{NODELASTTASKNUMBER}->{$node} = $start+$number-1;
+	 
+	$generatelist=1;
+	if(exists($self->{MAXCORESCHECK})) {
+	    if($number==$self->{MAXCORESCHECK}+1) {
+		$newnodelist.="," if($newnodelist);
+		$newnodelist.=$newnode;
+		$generatelist=0;
+	    } 
+	}
+	if($generatelist) {
+	    for($num=$start;$num<$start+$number;$num++) {
+		$newnodelist.="," if($newnodelist);
+		$newnodelist.=sprintf("%s-c%02d",$newnode,$num);
+	    }
+	}
     }
     return($newnodelist);
 }
