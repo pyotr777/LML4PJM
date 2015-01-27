@@ -14,15 +14,6 @@
     <objects>
         <object color="#FFFFFF" id="empty" name="Empty job" type="job" />
     </objects>
-    <nodedisplay title="default" id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView">
-        <scheme>
-            <el1 min="0" max="6" tagname="rack" mask="0xFF0100%01d">
-                <el2 min="0" max="15" tagname="node" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
-                    <el3 tagname="core" min="0" max="15" mask="-c%02d"></el3>
-                </el2>
-            </el1>
-        </scheme>
-    </nodedisplay>
 
     <nodedisplaylayout id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
         <schemehint>
@@ -50,30 +41,5 @@
         <column cid="6" pos="6" width="0.2" active="true" key="wall" />
         <column cid="7" pos="7" width="0.5" active="true" key="comment" />
     </tablelayout>
-
-    <table title="Running" id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs" description="This is the table showing all running jobs">
-        <column id="1" name="state" />
-        <column id="2" name="jid" />
-        <column id="3" name="totalcores" />
-        <column id="4" name="vnodelist" />
-        <column id="5" name="queuedate" />
-        <column id="6" name="wall" />
-        <column id="7" name="Full state" />
-    </table>
-
-
-
-    <table title="Nodes" id="nodelist" contenttype="nodes" description="This is the table contain all nodes of the system">
-        <column id="1" name="id" sort="alpha" type="mandatory" />
-        <column id="2" name="ncores" />
-        <column id="3" name="physmem" sort="alpha" />
-    </table>
-
-    <tablelayout id="nodes" gid="nodelist" active="false">
-        <column cid="1" pos="1" width="1" active="true" key="id" />
-        <column cid="2" pos="2" width="1" active="true" key="ncores" />
-        <column cid="3" pos="3" width="1" active="true" key="physmem" />
-    </tablelayout>
-
 
 </lml:lgui>
