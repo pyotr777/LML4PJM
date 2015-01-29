@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo -e "\n"
+./LML_da.pl -conf=samples/LML_da_PJM.conf
+echo -e "\n\n" 
