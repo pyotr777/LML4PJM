@@ -3,7 +3,7 @@
 use strict;
 
 use Term::ANSIColor;
-my $debug=1;
+my $debug=0;
 
 print colored ['blue'], "Running PJM/da_nodes_info_LML.pl\n";
 

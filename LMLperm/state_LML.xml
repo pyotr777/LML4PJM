@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lml:lgui version="1.1"
+ xmlns:lml="http://eclipse.org/ptp/lml"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd"
+      >
+<objects>
+<object color="#FFFFFF" id="empty" name="Empty job" type="job"/>
+<object color="#bf6c5f" id="sys000001" name="cluster" type="system"/>
+</objects>
+<information>
+<info oid="sys000001" type="short">
+<data key="hostname" value="fe01p09"/>
+<data key="motd" value="* *** SYSTEM Information ***&#10;*&#10;* Language Environment (Fortran/C/C++/MPI/Tools)&#10;* Latest version : K-1.2.0-15 (Released : Nov 12,2013)&#10;*&#10;* *** END Information ***&#10;"/>
+<data key="system_time" value="01/29/15-18:01:05"/>
+<data key="type" value="Cluster"/>
+</info>
+</information>
+<table  id="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenttype="jobs" title="org.eclipse.ptp.rm.lml.ui.ActiveJobsView">
+<column id="1" name="state" sort="alpha" description="Status of Job" type="optional"/>
+<column id="2" name="step" sort="alpha" description="unique job id" type="mandatory"/>
+<column id="3" name="totalcores" sort="numeric" description="total number of machine cores requested" type="mandatory"/>
+<column id="4" name="vnodelist" sort="alpha" description="virtual node list (PBS), used first" type="optional"/>
+<column id="5" name="queuedate" sort="date" description="date job was inserted in queue (submit)" type="optional"/>
+<column id="6" name="wall" sort="numeric" description="requested wall time for this job (s)" type="optional"/>
+<column id="7" name="comment" sort="alpha" description="comment" type="optional"/>
+</table>
+<tablelayout  id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" contenthint="jobs">
+<column cid="1" pos="1" width="0.0625" active="true" key="state"/>
+<column cid="2" pos="2" width="0.0625" active="true" key="step"/>
+<column cid="3" pos="3" width="0.0625" active="true" key="totalcores"/>
+<column cid="4" pos="4" width="0.25" active="true" key="vnodelist"/>
+<column cid="5" pos="5" width="0.125" active="true" key="queuedate"/>
+<column cid="6" pos="6" width="0.125" active="true" key="wall"/>
+<column cid="7" pos="7" width="0.3125" active="true" key="comment"/>
+</tablelayout>
+<nodedisplaylayout  id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
+<schemehint>
+<el1 tagname="rack" min="1" max="864" mask="0x%04d">
+    <el2 tagname="node" min="1" max="96" mask="00%02d">
+        <el3 tagname="core" min="1" max="8" mask="-c%02d">
+        </el3>
+    </el2>
+</el1>
+</schemehint>
+<el0 vgap="3" showtitle="true" maxlevel="3" cols="1">
+    <el1 vgap="1" showtitle="true" min="1" max="864" cols="24">
+        <el2 showtitle="true" min="1" max="96" hgap="1" cols="8">
+            <el3 showtitle="false" min="1" max="8">
+            </el3>
+        </el2>
+    </el1>
+</el0>
+</nodedisplaylayout>
+<nodedisplay id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" title="system: fe01p09">
+<scheme>
+    <el1 tagname="rack" min="1" max="864" mask="0x%04d">
+        <el2 tagname="node" min="1" max="96" mask="00%02d">
+            <el3 tagname="core" min="1" max="8" mask="-c%02d">
+            </el3>
+        </el2>
+    </el1>
+</scheme>
+<data>
+    <el1 oid="empty" min="1" max="864">
+    </el1>
+</data>
+</nodedisplay>
+</lml:lgui>

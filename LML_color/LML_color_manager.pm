@@ -10,7 +10,7 @@
 #*******************************************************************************/ 
 package LML_color_manager;
 use strict;
-my($debug)=0;
+my($debug)=2;
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
 my $patwrd="([\^\\s]+)";       # Pattern for Work (all noblank characters)

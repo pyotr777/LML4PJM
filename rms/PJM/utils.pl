@@ -15,7 +15,7 @@
 
 use strict;
 use Data::Dumper;
-my $debug=0;
+my $debug=1;
 my %mapping = &prepare_mapping();
 print "Prepared hash of size ". scalar keys %mapping;
 print "\n";
@@ -38,23 +38,23 @@ sub modify_nodenames {
 sub prepare_mapping {
 
     # Node number (key): 0x 01 01 00 10
-    #                       ^  ^     ^ loop3 hex
-    #                       |  | loop2 hex
-    #                       | loop1 hex
+    #                       ^  ^     ^ loop3 hex 10 - 6F
+    #                       |  | loop2 hex 01 - 18
+    #                       | loop1 hex 01 -24
 
     # Map to (value): 0x 0001 00 01
-    #                    ^       ^ 01-96 dec
-    #                    | 0001 - 09000 dec
+    #                    ^       ^ 01-96 dec  nodes
+    #                    | 0001 - 0864 dec   racks
 
     my %mapping = ();
     my $node_count=1;
     my $rack_count=1;
-    my $n_start = 16;
-    my $n_end = 111;
+    my $n_start = 16; 	# 10 hex
+    my $n_end = 111; 	# 6F hex
     my $r1_start = 1;
-    my $r1_end = 24;
+    my $r1_end = 24;	# 18 hex
     my $r2_start = 1;
-    my $r2_end = 36;
+    my $r2_end = 36;	# 24 hex
 
     for (my $i=$r2_start; $i<=$r2_end; $i++) {  # loop 1
         for (my $j=$r1_start; $j<=$r1_end; $j++) {  # loop 2
