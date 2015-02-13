@@ -142,12 +142,12 @@ my %mapping = (
 # Get jobid-s of running jobs
 my $cmd="/usr/bin/pjstat";
 
-open(IN,"$cmd -A |");
+open(IN,"$cmd  |");
 my $jobid="-";
 my $lastkey="-";
 
 my $jobcounter=0;
-print "Output of $cmd -A:\n" if ($debug>0);
+print "Output of $cmd :\n" if ($debug>0);
 while($line=<IN> && ($jobcounter<$maxjobs)) {
     chomp($line);
     

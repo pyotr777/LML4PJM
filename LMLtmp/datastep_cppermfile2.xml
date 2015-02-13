@@ -10,9 +10,9 @@
 </objects>
 <information>
 <info oid="sys000001" type="short">
-<data key="hostname" value="fe01p09"/>
-<data key="motd" value="* *** SYSTEM Information ***&#10;*&#10;* Language Environment (Fortran/C/C++/MPI/Tools)&#10;* Latest version : K-1.2.0-15 (Released : Nov 12,2013)&#10;*&#10;* *** END Information ***&#10;"/>
-<data key="system_time" value="01/29/15-18:01:05"/>
+<data key="hostname" value="fe01p06"/>
+<data key="motd" value="* *** SYSTEM Information ***&#10;*&#10;* Language Environment (Fortran/C/C++/MPI/Tools)&#10;* Default version : K-1.2.0-17 (Released : Feb 10,2015)&#10;*&#10;* *** END Information ***&#10;"/>
+<data key="system_time" value="02/13/15-17:51:44"/>
 <data key="type" value="Cluster"/>
 </info>
 </information>
@@ -52,7 +52,7 @@
     </el1>
 </el0>
 </nodedisplaylayout>
-<nodedisplay id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" title="system: fe01p09">
+<nodedisplay id="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" title="system: fe01p06">
 <scheme>
     <el1 tagname="rack" min="1" max="864" mask="0x%04d">
         <el2 tagname="node" min="1" max="96" mask="00%02d">
