@@ -63,7 +63,7 @@ sub prepare_mapping {
                 my $key = "0x".uc(sprintf("%02x%02x00%02x",$i,$j,$k));
                 my $value = sprintf("0x%04d00%02d",$rack_count,$node_count); 
                 $mapping{$key} = $value;
-                print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>0);
+                print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>1);
                 $node_count++;
             }
             $rack_count++;

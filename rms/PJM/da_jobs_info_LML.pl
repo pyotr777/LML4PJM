@@ -17,7 +17,7 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 require "rms/PJM/utils.pl";
 
 my $debug=1;
-my $maxjobs=12;
+my $maxjobs=1;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -68,7 +68,7 @@ my %mapping = (
     "Resource_List.walltime"                 => "wall",
     "Shell_Path_List"                        => "",
     "Walltime.Remaining"                     => "",
-    "comment"                                => "",
+    "comment"                                => "comment",
     "ctime"                                  => "",
     "depend"                                 => "",
     "etime"                                  => "",
@@ -142,23 +142,31 @@ my %mapping = (
 # Get jobid-s of running jobs
 my $cmd="/usr/bin/pjstat";
 
-open(IN,"$cmd  |");
+open(IN,"$cmd |");
 my $jobid="-";
 my $lastkey="-";
-
+my $comment;
 my $jobcounter=0;
 print "Output of $cmd :\n" if ($debug>0);
-while($line=<IN> && ($jobcounter<$maxjobs)) {
-    chomp($line);
-    
+while(($line=<IN>) && ($jobcounter<$maxjobs)) {
+    print $line."\n" if ($debug>1);
+    chomp($line);    
     if($line=~/^(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/) {
         if ($1 == "0") {
             next;
         }
-        print $line."\n" if ($debug>1);
+        print "matched line:".$line."\n" if ($debug>1);
+        $comment=$line;
         $jobid=$1;
         # print "jobid:".$jobid."\n";
-        #$jobs{$jobid}{comment}=$line;
+        
+        if ($4 eq "RUN") {
+            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        }
+        #else {
+            # Select only running jobs
+        #    next;
+        #}
         $jobs{$jobid}{name}=$2;
         $jobs{$jobid}{step}=$jobid;
         $jobs{$jobid}{job_state}=$4;
@@ -169,11 +177,9 @@ while($line=<IN> && ($jobcounter<$maxjobs)) {
         $jobs{$jobid}{qtime}=&parsetime($time);
         $jobs{$jobid}{elapse_lim}=$9;
         $jobs{$jobid}{totalcores}=$10;
-        if ($4 eq "RUN") {
-            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
-        }
+        $jobs{$jobid}{comment}=$comment;        
         if ($debug>0) {
-            print "id:$jobs{$jobid}{step}  status:$jobs{$jobid}{status}  owner:$jobs{$jobid}{owner}  group:$jobs{$jobid}{group} name:$jobs{$jobid}{name}   queuedate:$jobs{$jobid}{qtime} wall:$jobs{$jobid}{elapse_lim} : $jobs{$jobid}{totalcores} : $jobs{$jobid}{vnodelist} \n";
+            print "$jobs{$jobid}{step} : $jobs{$jobid}{status} : $jobs{$jobid}{owner} : $jobs{$jobid}{name} : $jobs{$jobid}{qtime} :w $jobs{$jobid}{elapse_lim} :tc $jobs{$jobid}{totalcores} :c $jobs{$jobid}{comment}\n";
         }
         $jobcounter++;
     } 

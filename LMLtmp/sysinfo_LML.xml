@@ -7,8 +7,8 @@
 </objects>
 <information>
 <info oid="sys000001" type="short">
- <data key="system_time"    value="02/13/15-17:51:44"/>
- <data key="hostname"       value="fe01p06"/>
+ <data key="system_time"    value="02/18/15-11:52:04"/>
+ <data key="hostname"       value="fe01p08"/>
  <data key="motd"           value="* *** SYSTEM Information ***&#10;*&#10;*  Language Environment (Fortran/C/C++/MPI/Tools)&#10;*    Default version : K-1.2.0-17   (Released : Feb 10,2015)&#10;*&#10;* *** END Information ***&#10;"/>
  <data key="type"           value="Cluster"/>
 </info>
