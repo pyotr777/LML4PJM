@@ -23,9 +23,9 @@
                 </el2>
             </el1>
         </schemehint>
-        <el0 cols="1" maxlevel="3" vgap="3" showtitle="true">
-            <el1 min="1" max="864" cols="24" showtitle="true" vgap="0">
-                <el2 min="1" max="96" cols="8" showtitle="true" hgap="0">
+        <el0 cols="1" maxlevel="3" vgap="0" showtitle="true">
+            <el1 min="1" max="864" cols="24" showtitle="true" vgap="0" hgap="0">
+                <el2 min="1" max="96" cols="8" showtitle="true" vgap="0" hgap="0">
                     <el3 min="1" max="8" showtitle="false" ></el3>
                 </el2>
             </el1>

@@ -11,7 +11,6 @@
 #*******************************************************************************/ 
 
 use strict;
-use Term::ANSIColor;
 use Getopt::Long;
 
 use FindBin;
@@ -25,7 +24,6 @@ use LML_combine_obj_bgq;
 use LML_combine_obj_alps;
 use LML_combine_obj_cluster;
 
-print colored ['yellow'], "Running LML_combine_obj.pl\n";
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -52,12 +50,12 @@ my $opt_timings=0;
 my $opt_dump=0;
 my $opt_dbdir="./";
 usage($0) if( ! GetOptions( 
-                'verbose'          => \$opt_verbose,
-                'timings'          => \$opt_timings,
-                'dump'             => \$opt_dump,
-                'dbdir=s'          => \$opt_dbdir,
-                'output=s'         => \$opt_outfile
-                ) );
+			    'verbose'          => \$opt_verbose,
+			    'timings'          => \$opt_timings,
+			    'dump'             => \$opt_dump,
+			    'dbdir=s'          => \$opt_dbdir,
+			    'output=s'         => \$opt_outfile
+			    ) );
 
 #print "@ARGV ($opt_outfile)\n";
 if ($#ARGV < 0) {
@@ -83,14 +81,14 @@ my $system_type_ref;
     keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
     my($key,$ref);
     while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
-        if($ref->{type} eq 'system') {
-            $system_type_ref=$ref=$filehandler->{DATA}->{INFODATA}->{$key};
-            if($ref->{type}) {
-                $system_type=$ref->{type};
-                printf("scan system: type is %s\n",$system_type);
-            }
-            last; 
-        }
+	if($ref->{type} eq 'system') {
+	    $system_type_ref=$ref=$filehandler->{DATA}->{INFODATA}->{$key};
+	    if($ref->{type}) {
+		$system_type=$ref->{type};
+		printf("scan system: type is %s\n",$system_type);
+	    }
+	    last; 
+	}
     }
 }
 
@@ -113,17 +111,17 @@ if($system_type eq "Cluster") {
     keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
     my($key,$ref);
     while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
-        if($ref->{type} eq 'node') {
-            $ref=$filehandler->{DATA}->{INFODATA}->{$key};
-                if(exists($ref->{ntype})) {
-                if($ref->{ntype} eq "PBS") {
-                    $system_type="PBS";
-                    $system_type_ref->{type}="PBS";
-                    printf("scan system: type reset to %s\n",$system_type);
-                }
-            }
-            last; 
-        }
+	if($ref->{type} eq 'node') {
+	    $ref=$filehandler->{DATA}->{INFODATA}->{$key};
+	    if(exists($ref->{ntype})) {
+		if($ref->{ntype} eq "PBS") {
+		    $system_type="PBS";
+		    $system_type_ref->{type}="PBS";
+		    printf("scan system: type reset to %s\n",$system_type);
+		}
+	    }
+	    last; 
+	}
     }
 }
 
@@ -138,8 +136,6 @@ if($opt_verbose) {
 }
 
 $filehandler->write_lml($opt_outfile);
-
-print colored ['yellow'], "end LML_combine_obj.pl\n";
 
 sub usage {
     die "Usage: $_[0] <options> <filenames> 

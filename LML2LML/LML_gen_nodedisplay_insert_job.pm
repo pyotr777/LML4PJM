@@ -338,22 +338,22 @@ sub _reduce_nodelist {
     # for each node: 
     #  covered[.] = {0 no nodes, 1 all nodes, 2 some nodes}  
     foreach $listref (@{$nodelistrefs}) {
-    	$nodenum=$listref->[0];
-        next if (! defined $nodenum);
-    	# check only nodes which are described by this subtree of the scheme
-    	next if($nodenum<$schemeref->{ATTR}->{min});
-    	next if($nodenum>$schemeref->{ATTR}->{max});
-    	if($#{$listref}==0) {
-    	    $covered[$nodenum]=1; # node full covered
-    	    print "_reduce_nodelist: $xspace # nodenum=$nodenum full covered (",join(',',@{$listref}),")\n" if($debug>=2); 
-    	} else {
-    	    my(@list);
-    	    $covered[$nodenum]=2 if($covered[$nodenum]==0);
-    	    print "_reduce_nodelist: $xspace # nodenum=$nodenum not full covered, rescan on sub-level (",join(',',@{$listref}),")\n" if($debug>=2); 
+	$nodenum=$listref->[0];
 
-    	    # remove top elem and add it to sublist
-    	    @list=@{$listref};shift(@list);push(@{$shortlists[$nodenum]},\@list);
-    	}
+	# check only nodes which are described by this subtree of the scheme
+	next if($nodenum<$schemeref->{ATTR}->{min});
+	next if($nodenum>$schemeref->{ATTR}->{max});
+	if($#{$listref}==0) {
+	    $covered[$nodenum]=1; # node full covered
+	    print "_reduce_nodelist: $xspace # nodenum=$nodenum full covered (",join(',',@{$listref}),")\n" if($debug>=2); 
+	} else {
+	    my(@list);
+	    $covered[$nodenum]=2 if($covered[$nodenum]==0);
+	    print "_reduce_nodelist: $xspace # nodenum=$nodenum not full covered, rescan on sub-level (",join(',',@{$listref}),")\n" if($debug>=2); 
+
+	    # remove top elem and add it to sublist
+	    @list=@{$listref};shift(@list);push(@{$shortlists[$nodenum]},\@list);
+	}
     }
 
     # check childs of all nodes which are not fully covered
