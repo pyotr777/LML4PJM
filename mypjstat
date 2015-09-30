@@ -1,0 +1,6 @@
+#!/bin/bash
+user=$(whoami)
+alljobs=$(pjstat -A)
+grep -i $user <<< "$alljobs"
+echo "$alljobs" | grep RUN | grep -i large | head -n 15
+

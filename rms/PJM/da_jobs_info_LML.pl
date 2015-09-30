@@ -17,7 +17,7 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 require "rms/PJM/utils.pl";
 
 my $debug=1;
-my $maxjobs=1;
+my $maxjobs=50;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -140,7 +140,7 @@ my %mapping = (
     );
 
 # Get jobid-s of running jobs
-my $cmd="/usr/bin/pjstat";
+my $cmd="./mypjstat";
 
 open(IN,"$cmd |");
 my $jobid="-";
@@ -160,11 +160,13 @@ while(($line=<IN>) && ($jobcounter<$maxjobs)) {
         $jobid=$1;
         # print "jobid:".$jobid."\n";
         
-        if ($4 eq "RUN") {
-            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
-        }
+        ## Matching every job with Perl is very slow
+        #
+        #if ($4 eq "RUN") {
+        #    $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        #}
         #else {
-            # Select only running jobs
+        #    # Select only running jobs
         #    next;
         #}
         $jobs{$jobid}{name}=$2;
