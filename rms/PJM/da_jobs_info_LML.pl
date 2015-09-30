@@ -155,20 +155,16 @@ while(($line=<IN>) && ($jobcounter<$maxjobs)) {
         if ($1 == "0") {
             next;
         }
-        print "matched line:".$line."\n" if ($debug>1);
         $comment=$line;
         $jobid=$1;
-        # print "jobid:".$jobid."\n";
+        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>1);
         
         ## Matching every job with Perl is very slow
         #
-        #if ($4 eq "RUN") {
-        #    $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
-        #}
-        #else {
-        #    # Select only running jobs
-        #    next;
-        #}
+        if ($4 eq "RUN") {
+            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        }
+        
         $jobs{$jobid}{name}=$2;
         $jobs{$jobid}{step}=$jobid;
         $jobs{$jobid}{job_state}=$4;
@@ -244,7 +240,7 @@ sub get_nodelist {
     while($line=<IN2>) {
         chomp($line);
         my $ndlist=join(",",@nodelist);
-        # print $line."\n";
+        print $line."\n";
         my $node;
         my $rank;
         if ($line=~/^(\d+)\s+(\d+)\s+([^\s]+).*$/) {       
