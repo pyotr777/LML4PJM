@@ -86,7 +86,7 @@ my %options = (
     "demo"                => 0, # generate anonymous data, if true
     "test"                => 0, # If true, do not generate the workflow and layout file. This can be used for automated testing.
     "cache"               => 1,  # Use caching mechanism via /tmp directory. Try to find an existing raw LML file. If the file is not existant or it is too old, generate it. Caching is omitted, if test is enabled.
-    "cachedir"            => "/tmp/LMLCache_".$hostname."/", #Directory used for caching raw LML data, only needed if cache is activated
+    "cachedir"            => "./tmp/LMLCache_".$hostname."/", #Directory used for caching raw LML data, only needed if cache is activated
     "cacheinterval"       => "60" #Update interval in seconds for the cache, if it is used
 );
 my @save_ARGV=(@ARGV);
@@ -137,6 +137,7 @@ if( ($#ARGV > 1) || ($#ARGV == 0 ) ) {
 
 # check request input file, parse the file into hash datastructure
 my $startRequestLocation = "./request_".$hostname."_".$ppid.".xml";
+&report_if_verbose("Request location: %s\n","$startRequestLocation");
 my $filehandler_request = parseLMLRequest($requestfile, $startRequestLocation, $options{verbose});
 my @options_from_request = ();
 #Try to parse additional options from the LML request
@@ -411,11 +412,11 @@ if($rawfile) {
 my $usedefaultlayout=0;
 if(!$options{nocheckrequest}) {
     if(exists($filehandler_request->{DATA}->{request})) {
-    if(exists($filehandler_request->{DATA}->{request}->[0]->{getDefaultData})) {
-        if($filehandler_request->{DATA}->{request}->[0]->{getDefaultData}=~/^true$/i) {
-        $usedefaultlayout=1;
+        if(exists($filehandler_request->{DATA}->{request}->[0]->{getDefaultData})) {
+            if($filehandler_request->{DATA}->{request}->[0]->{getDefaultData}=~/^true$/i) {
+                $usedefaultlayout=1;
+            }
         }
-    }
     }
 } else {
     $usedefaultlayout=1;
@@ -426,6 +427,7 @@ if(!$usedefaultlayout) {
     my $key;
     foreach $key (keys(%{$filehandler_request->{DATA}})) {
         $layoutfound=1 if ($key=~/LAYOUT$/);
+        &report_if_verbose("$0:\t%s\n",$key);
     }
     $usedefaultlayout=1 if(!$layoutfound);
 }
