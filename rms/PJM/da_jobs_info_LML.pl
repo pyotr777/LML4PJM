@@ -240,7 +240,7 @@ sub get_nodelist {
     while($line=<IN2>) {
         chomp($line);
         my $ndlist=join(",",@nodelist);
-        print $line."\n";
+        # print $line."\n";
         my $node;
         my $rank;
         if ($line=~/^(\d+)\s+(\d+)\s+([^\s]+).*$/) {       

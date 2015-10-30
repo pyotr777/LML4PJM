@@ -85,9 +85,9 @@ my %options = (
     "dump"                => 0, # If true, the given request object, workflow object and layout object are dumped to stderr
     "demo"                => 0, # generate anonymous data, if true
     "test"                => 0, # If true, do not generate the workflow and layout file. This can be used for automated testing.
-    "cache"				  => 1,  # Use caching mechanism via /tmp directory. Try to find an existing raw LML file. If the file is not existant or it is too old, generate it. Caching is omitted, if test is enabled.
-    "cachedir"			  => "/tmp/LMLCache_".$hostname."/", #Directory used for caching raw LML data, only needed if cache is activated
-    "cacheinterval"		  => "60" #Update interval in seconds for the cache, if it is used
+    "cache"               => 1,  # Use caching mechanism via /tmp directory. Try to find an existing raw LML file. If the file is not existant or it is too old, generate it. Caching is omitted, if test is enabled.
+    "cachedir"            => "/tmp/LMLCache_".$hostname."/", #Directory used for caching raw LML data, only needed if cache is activated
+    "cacheinterval"       => "60" #Update interval in seconds for the cache, if it is used
 );
 my @save_ARGV=(@ARGV);
 my @options_from_file_found = ();
@@ -103,10 +103,10 @@ usage($0) if( ! GetOptions(
                             'nocheckrequest'   => \$options{nocheckrequest},
                             'demo'             => \$options{demo},
                             'test'             => \$options{test},
-     		            	'dump'             => \$options{dump},
-     		            	'cache=s'		   => \$options{cache},
-     		            	'cachedir=s'	   => \$options{cachedir},
-     		            	'cacheinterval=s'  => \$options{cacheinterval}
+                            'dump'             => \$options{dump},
+                            'cache=s'          => \$options{cache},
+                            'cachedir=s'       => \$options{cachedir},
+                            'cacheinterval=s'  => \$options{cacheinterval}
                             ) );
 my $date=`date`;
 chomp($date);
@@ -141,31 +141,31 @@ my $filehandler_request = parseLMLRequest($requestfile, $startRequestLocation, $
 my @options_from_request = ();
 #Try to parse additional options from the LML request
 if(!$options{nocheckrequest} && defined($filehandler_request->{DATA}->{REQUEST}->{driver}) ){
-	my $driver_ref=$filehandler_request->{DATA}->{REQUEST}->{driver};
-	my %optionsFromRequest = parseOptionsFromRequest($driver_ref);
+    my $driver_ref=$filehandler_request->{DATA}->{REQUEST}->{driver};
+    my %optionsFromRequest = parseOptionsFromRequest($driver_ref);
 
-	foreach my $attribute( keys(%optionsFromRequest) ){
-		my $value = 0;
-		if(defined($optionsFromRequest{$attribute} ) ){
-			$value = $optionsFromRequest{$attribute};
-		}
-		
-		$options{$attribute} = $value;
-		
-		push(@options_from_request, $attribute);
-	}
-	
-	#Overwrite with options from LML_da_options file again as this file has highest priority
-	overwriteOptionsWithLMLDAOptionsFile();
+    foreach my $attribute( keys(%optionsFromRequest) ){
+        my $value = 0;
+        if(defined($optionsFromRequest{$attribute} ) ){
+            $value = $optionsFromRequest{$attribute};
+        }
+        
+        $options{$attribute} = $value;
+        
+        push(@options_from_request, $attribute);
+    }
+    
+    #Overwrite with options from LML_da_options file again as this file has highest priority
+    overwriteOptionsWithLMLDAOptionsFile();
 }
 #Join all options used in the script
 my $actualOptions = "";
 foreach my $argument (keys(%options)){
-	my $value = "";
-	if(defined($options{$argument}) ){
-		$value = $options{$argument};
-	}
-	$actualOptions = $actualOptions.$argument."=>".$value." ";
+    my $value = "";
+    if(defined($options{$argument}) ){
+        $value = $options{$argument};
+    }
+    $actualOptions = $actualOptions.$argument."=>".$value." ";
 }
 
 # print header
@@ -219,29 +219,29 @@ if(! -d $permdir) {
 }
 
 if( $options{cache} ){
-	$cache = Data_cache->new($options{cachedir}, $options{cacheinterval});#With negative cache interval, this is automatically made to a read only cache
-	
-	if(! $cache->isCacheUsable() ){ #Deactivate caching, if it is not allowed on this system
-		$options{cache} = 0;
-		&report_if_verbose("%s", "$0: Cannot use cache directory ".$cache->getCacheDirectory()."\n");
-	}
-	else{
-	
-		if($cache->isAlreadyUpdating()){
-			$cacheIsBeingUpdatedAlready = 1;
-			&report_if_verbose("%s", "$0: Another LML_da instance is currently updating raw data, will wait for it to finish\n");
-		}
-		
-		if($cache->isUpdateRequired() && !$cacheIsBeingUpdatedAlready ){#Update only, if there is not another lml_da instance aready updating
-			$updateCacheFile = 1;
-			&report_if_verbose("%s", "$0: A cache update is required, will perform raw data update\n");
-		}
-		
-		if(!$updateCacheFile && !$cacheIsBeingUpdatedAlready){
-			&report_if_verbose("%s", "$0: Reusing existing raw LML data from cache\n");
-		}
-	
-	}
+    $cache = Data_cache->new($options{cachedir}, $options{cacheinterval});#With negative cache interval, this is automatically made to a read only cache
+    
+    if(! $cache->isCacheUsable() ){ #Deactivate caching, if it is not allowed on this system
+        $options{cache} = 0;
+        &report_if_verbose("%s", "$0: Cannot use cache directory ".$cache->getCacheDirectory()."\n");
+    }
+    else{
+    
+        if($cache->isAlreadyUpdating()){
+            $cacheIsBeingUpdatedAlready = 1;
+            &report_if_verbose("%s", "$0: Another LML_da instance is currently updating raw data, will wait for it to finish\n");
+        }
+        
+        if($cache->isUpdateRequired() && !$cacheIsBeingUpdatedAlready ){#Update only, if there is not another lml_da instance aready updating
+            $updateCacheFile = 1;
+            &report_if_verbose("%s", "$0: A cache update is required, will perform raw data update\n");
+        }
+        
+        if(!$updateCacheFile && !$cacheIsBeingUpdatedAlready){
+            &report_if_verbose("%s", "$0: Reusing existing raw LML data from cache\n");
+        }
+    
+    }
 }
 
 # check rawfile
@@ -250,6 +250,7 @@ if($options{rawfile}) {
         &exit_witherror($outputfile,"$0: rawfile $options{rawfile} specified but not found, exiting ...\n");
     }
     $rawfile=$options{rawfile};
+    &report_if_verbose("%s", "$0: Using rawfile $rawfile\n");
 }
 
 
@@ -280,16 +281,16 @@ if($rawfile) {
     }
     $laststep=$step;
 } elsif( $options{cache} && ! $updateCacheFile){ #Caching is active and existing raw file can be used
-	
-	&report_if_verbose("%s","Caching is active, no update of raw data required, copying file from cache\n");
-	
-	#copy cached raw file in workflow
-	$step="cachefilecp";
-	my $cachedrawfile = $cache->getRawFilePath();
-	add_exec_step_to_workflow($workflowxml,$step, $laststep, 
+    
+    &report_if_verbose("%s","Caching is active, no update of raw data required, copying file from cache\n");
+    
+    #copy cached raw file in workflow
+    $step="cachefilecp";
+    my $cachedrawfile = $cache->getRawFilePath();
+    add_exec_step_to_workflow($workflowxml,$step, $laststep, 
                                    "cp $cachedrawfile \$stepoutfile");
     $laststep=$step;
-	
+    
 } else {
     # get data from resource management system (RMS)
 
@@ -297,92 +298,92 @@ if($rawfile) {
     my %cmds=();
 
     if($options{rms} ne "undef") { 
-		&report_if_verbose("$0: rms given by command line option: $options{rms} ...\n");
-		$rms=uc($options{rms});
+        &report_if_verbose("$0: rms given by command line option: $options{rms} ...\n");
+        $rms=uc($options{rms});
     } else {
-		&report_if_verbose("$0: check request for rms hint ...\n");
-		if(exists($filehandler_request->{DATA}->{REQUEST})) {
-		    if(exists($filehandler_request->{DATA}->{REQUEST}->{driver})) {
-				my $driver_ref=$filehandler_request->{DATA}->{REQUEST}->{driver};
-				if(!$options{nocheckrequest}) {
-				    # check rms name
-				    if(exists($driver_ref->{attr})) {
-						if(exists($driver_ref->{attr}->{name})) {
-						    $rms=uc($driver_ref->{attr}->{name}); # upper case, except:  
-						    &report_if_verbose("$0: check_for rms, got hint from request ... ($rms)\n");
-			            }
-				    }
-				}
-				
-				if(!$options{nocheckrequest}) {
-				    # check rms commands
-				    if(exists($driver_ref->{command})) {
-						my($key);
-						foreach $key ( keys(%{$driver_ref->{command}}) ) {
-						    if(exists($driver_ref->{command}->{$key}->{exec})) {
-								my $cmd_key="cmd_".$key;
-								$cmds{$cmd_key}=$driver_ref->{command}->{$key}->{exec};
-								&report_if_verbose("$0: check_for rms, got hint from for cmd $cmd_key ... ($cmds{$cmd_key})\n");
-						    }
-						}
-				    }
-				}
-		    }
-		} 
+        &report_if_verbose("$0: check request for rms hint ...\n");
+        if(exists($filehandler_request->{DATA}->{REQUEST})) {
+            if(exists($filehandler_request->{DATA}->{REQUEST}->{driver})) {
+                my $driver_ref=$filehandler_request->{DATA}->{REQUEST}->{driver};
+                if(!$options{nocheckrequest}) {
+                    # check rms name
+                    if(exists($driver_ref->{attr})) {
+                        if(exists($driver_ref->{attr}->{name})) {
+                            $rms=uc($driver_ref->{attr}->{name}); # upper case, except:  
+                            &report_if_verbose("$0: check_for rms, got hint from request ... ($rms)\n");
+                        }
+                    }
+                }
+                
+                if(!$options{nocheckrequest}) {
+                    # check rms commands
+                    if(exists($driver_ref->{command})) {
+                        my($key);
+                        foreach $key ( keys(%{$driver_ref->{command}}) ) {
+                            if(exists($driver_ref->{command}->{$key}->{exec})) {
+                                my $cmd_key="cmd_".$key;
+                                $cmds{$cmd_key}=$driver_ref->{command}->{$key}->{exec};
+                                &report_if_verbose("$0: check_for rms, got hint from for cmd $cmd_key ... ($cmds{$cmd_key})\n");
+                            }
+                        }
+                    }
+                }
+            }
+        } 
     }
 
     if ($rms ne "undef") {
-		if (do "rms/$rms/da_check_info_LML.pl") {
-		    if (exists($main::check_functions->{$rms})) {
-				if ( &{$main::check_functions->{$rms}}(\$rms,\%cmds,$options{verbose})) {
-				    &report_if_verbose("$0: rms/$rms/da_check_info_LML.pl --> rms=$rms\n");
-				} else {
-				    &report_if_verbose("$0: rms/$rms/da_check_info_LML.pl unable to locate rms $rms\n");
-				    $rms="undef";
-				} 
-		    } else { 
-			&report_if_verbose("$0:  WARNING rms/$rms/da_check_info_LML.pl defines no check function\n");
-			$rms="undef";
-		    }
-		} else {
-		    &report_if_verbose("$0: ERROR could not run rms/$rms/da_check_info_LML.pl (perhaps missing return code of script)\n");
-		    $rms="undef";
-		}
+        if (do "rms/$rms/da_check_info_LML.pl") {
+            if (exists($main::check_functions->{$rms})) {
+                if ( &{$main::check_functions->{$rms}}(\$rms,\%cmds,$options{verbose})) {
+                    &report_if_verbose("$0: rms/$rms/da_check_info_LML.pl --> rms=$rms\n");
+                } else {
+                    &report_if_verbose("$0: rms/$rms/da_check_info_LML.pl unable to locate rms $rms\n");
+                    $rms="undef";
+                } 
+            } else { 
+            &report_if_verbose("$0:  WARNING rms/$rms/da_check_info_LML.pl defines no check function\n");
+            $rms="undef";
+            }
+        } else {
+            &report_if_verbose("$0: ERROR could not run rms/$rms/da_check_info_LML.pl (perhaps missing return code of script)\n");
+            $rms="undef";
+        }
     } else {
         my ($r,$check_f,$generate_f,$test_rms);
-		my %cmds_save=(%cmds);
+        my %cmds_save=(%cmds);
         foreach $r (<rms/*>) {
-		    %cmds=(%cmds_save);
-		    $test_rms=$r;$test_rms=~s/(.*\/)//s;
-		    &report_if_verbose("$0: found $r/da_check_info_LML.pl running test ...\n");
-		    if (do "$r/da_check_info_LML.pl") {
-				if (exists($main::check_functions->{$test_rms})) {
-				    if ( &{$main::check_functions->{$test_rms}}(\$rms,\%cmds,$options{verbose})) {
-						$rms=$test_rms;
-						&report_if_verbose("$0: rms/$r/da_check_info_LML.pl --> rms=$rms\n");
-						last;
-				    } 
-				} else {
-				    &report_if_verbose("$0:  WARNING rms/$r/da_check_info_LML.pl defines no check function\n");
-				}
-		    } else {
-				&report_if_verbose("$0:  ERROR could not run rms/$r/da_check_info_LML.pl (perhaps missing return code of script)\n");
-		    }
-		}
+            %cmds=(%cmds_save);
+            $test_rms=$r;$test_rms=~s/(.*\/)//s;
+            &report_if_verbose("$0: found $r/da_check_info_LML.pl running test ...\n");
+            if (do "$r/da_check_info_LML.pl") {
+                if (exists($main::check_functions->{$test_rms})) {
+                    if ( &{$main::check_functions->{$test_rms}}(\$rms,\%cmds,$options{verbose})) {
+                        $rms=$test_rms;
+                        &report_if_verbose("$0: rms/$r/da_check_info_LML.pl --> rms=$rms\n");
+                        last;
+                    } 
+                } else {
+                    &report_if_verbose("$0:  WARNING rms/$r/da_check_info_LML.pl defines no check function\n");
+                }
+            } else {
+                &report_if_verbose("$0:  ERROR could not run rms/$r/da_check_info_LML.pl (perhaps missing return code of script)\n");
+            }
+        }
     }
 
     if($rms eq "undef") {
-	&exit_witherror($outputfile,"$0: could not determine rms, exiting ...\n");
+        &exit_witherror($outputfile,"$0: could not determine rms, exiting ...\n");
     }
     
     if (exists($main::generate_functions->{$rms})) {
-	$laststep=&{$main::generate_functions->{$rms}}($workflowxml, $laststep, \%cmds);
+       $laststep=&{$main::generate_functions->{$rms}}($workflowxml, $laststep, \%cmds);
     }
 
     $step="addcolor";
     my $colorpermdir = "\$permdir"; #The directory used for remembering LML colors over multiple sessions
     if($updateCacheFile ){
-    	$colorpermdir = $cache->getCacheDirectory();
+        $colorpermdir = $cache->getCacheDirectory();
     }
     &add_exec_step_to_workflow($workflowxml,$step, $laststep, 
                                "$^X \$instdir/LML_color/LML_color_obj.pl -colordefs \$instdir/LML_color/default.conf " .
@@ -390,17 +391,17 @@ if($rawfile) {
                                "-o     \$stepoutfile \$stepinfile");
     $laststep=$step;
 
-	#Copy the raw file with added colors to the LML cache, if requested
-	if($updateCacheFile ){
-		
-		$step="cacherawfile";
-		my $cachedrawfile = $cache->getRawFilePath();
-	    &add_exec_step_to_workflow($workflowxml,$step, $laststep, 
-	                               "cp \$stepinfile $cachedrawfile.new", 
-	                               "mv $cachedrawfile.new $cachedrawfile");#For most possible atomicity use mv
-	    $laststep=$step;
-		
-	}
+    #Copy the raw file with added colors to the LML cache, if requested
+    if($updateCacheFile ){
+        
+        $step="cacherawfile";
+        my $cachedrawfile = $cache->getRawFilePath();
+        &add_exec_step_to_workflow($workflowxml,$step, $laststep, 
+                                   "cp \$stepinfile $cachedrawfile.new", 
+                                   "mv $cachedrawfile.new $cachedrawfile");#For most possible atomicity use mv
+        $laststep=$step;
+        
+    }
 }
 
 #########################
@@ -410,11 +411,11 @@ if($rawfile) {
 my $usedefaultlayout=0;
 if(!$options{nocheckrequest}) {
     if(exists($filehandler_request->{DATA}->{request})) {
-	if(exists($filehandler_request->{DATA}->{request}->[0]->{getDefaultData})) {
-	    if($filehandler_request->{DATA}->{request}->[0]->{getDefaultData}=~/^true$/i) {
-		$usedefaultlayout=1;
-	    }
-	}
+    if(exists($filehandler_request->{DATA}->{request}->[0]->{getDefaultData})) {
+        if($filehandler_request->{DATA}->{request}->[0]->{getDefaultData}=~/^true$/i) {
+        $usedefaultlayout=1;
+        }
+    }
     }
 } else {
     $usedefaultlayout=1;
@@ -478,16 +479,16 @@ if(! $options{test}) {
     $cmd .= " > $tmpdir/LML_da.log";
     $cmd .= " 2> $tmpdir/LML_da.errlog";
 
-	if($cacheIsBeingUpdatedAlready){
-    	report_if_verbose("$0: %s\n","Waiting for an updating lml_da instance to finish the cache update");
-    	$cache->waitUntilMutexIsUnlocked();
-    	report_if_verbose("$0: %s\n","Cache was updated");
+    if($cacheIsBeingUpdatedAlready){
+        report_if_verbose("$0: %s\n","Waiting for an updating lml_da instance to finish the cache update");
+        $cache->waitUntilMutexIsUnlocked();
+        report_if_verbose("$0: %s\n","Cache was updated");
     }
     
     if($updateCacheFile){
-    	report_if_verbose("$0: %s\n","Waiting for cache mutex to be available");
-    	$cache->startMutex();
-    	report_if_verbose("$0: %s\n","Entered cache mutex");
+        report_if_verbose("$0: %s\n","Waiting for cache mutex to be available");
+        $cache->startMutex();
+        report_if_verbose("$0: %s\n","Entered cache mutex");
     }
     
     &report_if_verbose("$0: executing: %s ...\n",$cmd);
@@ -497,8 +498,8 @@ if(! $options{test}) {
     &report_if_verbose("$0: %60s -> ready, time used %10.4ss\n","",$tdiff);
     
     if($updateCacheFile){
-    	$cache->stopMutex();
-    	report_if_verbose("$0: %s\n","Unlocked cache mutex");
+        $cache->stopMutex();
+        report_if_verbose("$0: %s\n","Unlocked cache mutex");
     }
     
     if($rc) {     
@@ -680,9 +681,9 @@ sub create_default_layout {
     
     my $filehandler_layout = LML_file_obj->new($options{verbose},1);
     if(-f $layoutfilename_rms) {
-	$filehandler_layout->read_lml_fast($layoutfilename_rms);
+    $filehandler_layout->read_lml_fast($layoutfilename_rms);
     } else {
-	$filehandler_layout->read_lml_fast($layoutfilename);
+    $filehandler_layout->read_lml_fast($layoutfilename);
     }
     $filehandler_layout->check_lml();
     return($filehandler_layout);
@@ -744,11 +745,11 @@ sub close_report {
 # There are three ways to provide options for this driver script:
 #  1) Pass options via the calling command, e.g. LML_da.pl -tmpdir=./mytmp -verbose request.xml
 #  2) Provide arguments in the LML input file, e.g. 
-#		<driver name="TORQUE">
-#			<arg attribute="verbose" />
-#			<arg attribute="keeptmp" />
-#			<arg attribute="tmpdir" value="./mytmp" />
-#		</driver>
+#       <driver name="TORQUE">
+#           <arg attribute="verbose" />
+#           <arg attribute="keeptmp" />
+#           <arg attribute="tmpdir" value="./mytmp" />
+#       </driver>
 #  3) Store options in .LML_da_options file, e.g.
 #     keeptmp=1
 #     verbose=1
@@ -767,18 +768,18 @@ sub close_report {
 #
 #***********************************************************************************
 sub parseOptionsFromRequest{
-	my $driverRef = shift;
-	my %parsedOptions;
-	
-	foreach my $attribute ( keys(%{$driverRef->{args}}) ){
-		my $value = $driverRef->{args}->{$attribute};
-		if(!defined($value)){ #Set value to 1, if it is not defined. This allows to activate some option by ommitting a value
-			$value = 1;
-		}
-		$parsedOptions{$attribute} = $value;
-	}
-	
-	return %parsedOptions;
+    my $driverRef = shift;
+    my %parsedOptions;
+    
+    foreach my $attribute ( keys(%{$driverRef->{args}}) ){
+        my $value = $driverRef->{args}->{$attribute};
+        if(!defined($value)){ #Set value to 1, if it is not defined. This allows to activate some option by ommitting a value
+            $value = 1;
+        }
+        $parsedOptions{$attribute} = $value;
+    }
+    
+    return %parsedOptions;
 }
 
 #****************************************************************************
@@ -795,52 +796,52 @@ sub parseOptionsFromRequest{
 # @param $_[2] 1, if verbose mode is activated, 0 otherwise
 #
 # @return reference to a datastructure parsed from LML_file_obj holding all
-#			data parsed from the LML request
+#           data parsed from the LML request
 #
 #****************************************************************************
 sub parseLMLRequest{
-	
-	my $requestPath = shift;
-	my $generatedRequestPath = shift;
-	my $isVerbose = shift;
-	
-	# check request input file
-	if ($requestPath ne "-") {
-    	if(! -f $requestPath) {
-        	&exit_witherror($outputfile,"$0: requestPath $requestPath not found, exiting ...\n");
-    	}
-	}
+    
+    my $requestPath = shift;
+    my $generatedRequestPath = shift;
+    my $isVerbose = shift;
+    
+    # check request input file
+    if ($requestPath ne "-") {
+        if(! -f $requestPath) {
+            &exit_witherror($outputfile,"$0: requestPath $requestPath not found, exiting ...\n");
+        }
+    }
 
-	# read config file
-	&report_if_verbose("%s", "$0: requestPath=$requestPath\n");
-	my $tstart=time;
+    # read config file
+    &report_if_verbose("%s", "$0: requestPath=$requestPath\n");
+    my $tstart=time;
 
-	# debug request file, copy request into special file
-	open(OUT,"> $generatedRequestPath");
-	#Read LML request from STDIN
-	if ($requestPath eq "-") {
-    	while(<>) {
-        	print OUT $_;
-    	}
-    	$requestPath=$generatedRequestPath;
-	} else { #Read LML request from specific request path passed as argument
-    	open(IN,$requestPath);
-    	while(<IN>) {
-        	print OUT $_;
-    	}
-    	close(IN);
-	}
-	close(OUT);
+    # debug request file, copy request into special file
+    open(OUT,"> $generatedRequestPath");
+    #Read LML request from STDIN
+    if ($requestPath eq "-") {
+        while(<>) {
+            print OUT $_;
+        }
+        $requestPath=$generatedRequestPath;
+    } else { #Read LML request from specific request path passed as argument
+        open(IN,$requestPath);
+        while(<IN>) {
+            print OUT $_;
+        }
+        close(IN);
+    }
+    close(OUT);
 
-	my $filehandler_request = LML_file_obj->new($isVerbose,1);
-	$filehandler_request->read_lml_fast($requestPath);
-	my $tdiff=time-$tstart;
-	&report_if_verbose("$0: parsing XML requestPath in %6.4f sec\n",$tdiff);
-	if(!$filehandler_request) {
-    	&exit_witherror($outputfile,"$0: could not parse requestPath $requestPath, exiting ...\n");
-	}
-	
-	return $filehandler_request;
+    my $filehandler_request = LML_file_obj->new($isVerbose,1);
+    $filehandler_request->read_lml_fast($requestPath);
+    my $tdiff=time-$tstart;
+    &report_if_verbose("$0: parsing XML requestPath in %6.4f sec\n",$tdiff);
+    if(!$filehandler_request) {
+        &exit_witherror($outputfile,"$0: could not parse requestPath $requestPath, exiting ...\n");
+    }
+    
+    return $filehandler_request;
 }
 
 #********************************************************************
@@ -852,22 +853,22 @@ sub parseLMLRequest{
 # @options_from_file_found and %options.
 #********************************************************************
 sub overwriteOptionsWithLMLDAOptionsFile{
-	@options_from_file_found = ();
-	
-	if (-f $options_file) {
-    	my ($line);
-    	open(IN,$options_file);
-    	while($line=<IN>) {
-        	if($line=~/$patwrd=\s*$patwrd\s*$/) {
-	    		my($opt_name,$opt_value)=($1,$2) ;
-		    	if(exists($options{$opt_name})) {
-					$options{$opt_name}=$opt_value;
-					push(@options_from_file_found,$opt_name);
-		    	} else {
-					&report_if_verbose("WARNING found unknown option (%s) in option file file %s\n",$opt_name,$options_file);
-		    	}
-        	}
-    	}
-    	close(IN);
-	}
+    @options_from_file_found = ();
+    
+    if (-f $options_file) {
+        my ($line);
+        open(IN,$options_file);
+        while($line=<IN>) {
+            if($line=~/$patwrd=\s*$patwrd\s*$/) {
+                my($opt_name,$opt_value)=($1,$2) ;
+                if(exists($options{$opt_name})) {
+                    $options{$opt_name}=$opt_value;
+                    push(@options_from_file_found,$opt_name);
+                } else {
+                    &report_if_verbose("WARNING found unknown option (%s) in option file file %s\n",$opt_name,$options_file);
+                }
+            }
+        }
+        close(IN);
+    }
 }
