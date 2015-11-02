@@ -19,14 +19,14 @@
         <schemehint>
             <el1 min="1" max="864" tagname="rack" mask="0x%04d">
                 <el2 min="1" max="96" tagname="node" mask="00%02d">
-                    <el3 tagname="core" min="1" max="8" mask="-c%02d"></el3>
+                    <el3 tagname="core" min="0" max="7" mask="-c%02d"></el3>
                 </el2>
             </el1>
         </schemehint>
         <el0 cols="1" maxlevel="3" vgap="0" showtitle="true">
             <el1 min="1" max="864" cols="24" showtitle="true" vgap="0" hgap="0">
                 <el2 min="1" max="96" cols="4" showtitle="true" vgap="0" hgap="0">
-                    <el3 min="1" max="8" showtitle="false" ></el3>
+                    <el3 min="0" max="7" showtitle="false" ></el3>
                 </el2>
             </el1>
         </el0>
