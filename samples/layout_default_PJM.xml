@@ -17,16 +17,18 @@
 
     <nodedisplaylayout id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
         <schemehint>
-            <el1 min="0" max="6" tagname="rack" mask="0xFF0100%01d">
-                <el2 min="0" max="15" tagname="node" map="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F">
-                    <el3 tagname="core" min="0" max="15" mask="-c%02d"></el3>
+            <el1 min="0" max="7" tagname="tofu_unit" mask="0xFF0100%01d">
+                <el2 min="0" max="11" tagname="node" mask="%02d">
+                    <el3 tagname="core" min="0" max="15" mask="-c%02d">
+                    </el3>
                 </el2>
             </el1>
         </schemehint>
-        <el0 rows="7" cols="1" maxlevel="3" vgap="3" showtitle="true">
-            <el1 min="0" max="6" cols="4" showtitle="true" vgap="1">
-                <el2 min="0" max="15" cols="16" showtitle="true" hgap="3">
-                    <el3 min="0" max="15" showtitle="true" ></el3>
+        <el0 cols="1" maxlevel="4" vgap="3" showtitle="false">
+            <el1 min="0" max="7" cols="12" showtitle="true" vgap="1">
+                <el2 min="0" max="11" cols="1" showtitle="true" hgap="1" vgap="1" >
+                    <el3 min="0" max="15" vgap="1" >
+                    </el3>
                 </el2>
             </el1>
         </el0>

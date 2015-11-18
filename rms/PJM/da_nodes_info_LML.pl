@@ -124,14 +124,13 @@ while($line=<IN>) {
         $nodes{$nodeid}{id}=$nodeid;        
         $nodes{$nodeid}{state}=$statefree;
     } 
-    #elsif ($line=~/cpu\s+(\d+)/) {        
-    #    print "cpu($nodeid) $1\n" if ($debug>0);
-    #    $nodes{$nodeid}{ncpus}=$1;
-    #} elsif ($line=~/mem\s+([^\s]+)/) {        
-    #    print "mem($nodeid) $1\n" if ($debug>0);
-    #    $nodes{$nodeid}{physmem}=$1;
-    #} 
-    elsif ($line=~/RUNNING_JOBS\s*:\s*([^\s]+)/) {        
+    elsif ($line=~/cpu\s+(\d+)/) {        
+        print "cpu($nodeid) $1\n" if ($debug>0);
+        $nodes{$nodeid}{ncpus}=$1;
+    } elsif ($line=~/mem\s+([^\s]+)/) {        
+        print "mem($nodeid) $1\n" if ($debug>0);
+        $nodes{$nodeid}{physmem}=$1;
+    } elsif ($line=~/RUNNING_JOBS\s*:\s*([^\s]+)/) {        
         print "jobs($nodeid) $1\n" if ($debug>0);
         $nodes{$nodeid}{state}=$statebusy;
         $nodes{$nodeid}{jobs}=$1;
