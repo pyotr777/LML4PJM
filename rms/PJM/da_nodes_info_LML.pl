@@ -14,6 +14,8 @@ use Term::ANSIColor;
 
 print colored ['blue'], "Running PJM/da_nodes_info_LML.pl\n";
 
+require "rms/PJM/utils.pl";
+
 my $debug=0;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
@@ -117,18 +119,19 @@ while($line=<IN>) {
     chomp($line);
     # printf "$line\n";
     if ($line=~/^\[\s*NODE:\s*([^\s]+)/) {
-    	$nodeid=$1;
+        $nodeid=&modify_nodenames($1);
         print colored ['green'],"$nodeid\n" if ($debug>0);
-    	$nodes{$nodeid}{id}=$nodeid;        
+        $nodes{$nodeid}{id}=$nodeid;        
         $nodes{$nodeid}{state}=$statefree;
     } 
-    elsif ($line=~/cpu\s+(\d+)/) {        
-        print "cpu($nodeid) $1\n" if ($debug>0);
-        $nodes{$nodeid}{ncpus}=$1;
-    } elsif ($line=~/mem\s+([^\s]+)/) {        
-        print "mem($nodeid) $1\n" if ($debug>0);
-        $nodes{$nodeid}{physmem}=$1;
-    } elsif ($line=~/RUNNING_JOBS\s*:\s*([^\s]+)/) {        
+    #elsif ($line=~/cpu\s+(\d+)/) {        
+    #    print "cpu($nodeid) $1\n" if ($debug>0);
+    #    $nodes{$nodeid}{ncpus}=$1;
+    #} elsif ($line=~/mem\s+([^\s]+)/) {        
+    #    print "mem($nodeid) $1\n" if ($debug>0);
+    #    $nodes{$nodeid}{physmem}=$1;
+    #} 
+    elsif ($line=~/RUNNING_JOBS\s*:\s*([^\s]+)/) {        
         print "jobs($nodeid) $1\n" if ($debug>0);
         $nodes{$nodeid}{state}=$statebusy;
         $nodes{$nodeid}{jobs}=$1;
@@ -140,10 +143,10 @@ close(IN);
 foreach $nodeid (keys(%nodes)) {
     my($key,$value,$pair);
     if(exists($nodes{$nodeid}{status})) {
-    	foreach $pair (split(/,/,$nodes{$nodeid}{status})) {
-    	    ($key,$value)=split(/=/,$pair);
-    	    $nodes{$nodeid}{$key}=$value;
-    	}
+        foreach $pair (split(/,/,$nodes{$nodeid}{status})) {
+            ($key,$value)=split(/=/,$pair);
+            $nodes{$nodeid}{$key}=$value;
+        }
     } 
 
 }
@@ -152,8 +155,8 @@ print colored ['green'], "writing to $filename\n";
 open(OUT,"> $filename") || die "cannot open file $filename";
 printf(OUT "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 printf(OUT "<lml:lgui xmlns:lml=\"http://eclipse.org/ptp/lml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-printf(OUT "	xsi:schemaLocation=\"http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd\"\n");
-printf(OUT "	version=\"1.1\"\>\n");
+printf(OUT "    xsi:schemaLocation=\"http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd\"\n");
+printf(OUT "    version=\"1.1\"\>\n");
 printf(OUT "<objects>\n");
 $count=0;
 foreach $nodeid (sort(keys(%nodes))) {
@@ -165,18 +168,18 @@ printf(OUT "<information>\n");
 foreach $nodeid (sort(keys(%nodes))) {
     printf(OUT "<info oid=\"nd%06d\" type=\"short\">\n",$nodenr{$nodeid});
     foreach $key (sort(keys(%{$nodes{$nodeid}}))) {
-	if(exists($mapping{$key})) {
-	    if($mapping{$key} ne "") {
-		$value=&modify($key,$mapping{$key},$nodes{$nodeid}{$key});
-		if($value) {
-		    printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
-		}
-	    } else {
-		$notmappedkeys{$key}++;
-	    }
-	} else {
-	    $notfoundkeys{$key}++;
-	}
+    if(exists($mapping{$key})) {
+        if($mapping{$key} ne "") {
+            $value=&modify($key,$mapping{$key},$nodes{$nodeid}{$key});
+            if($value) {
+                printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
+            }
+        } else {
+            $notmappedkeys{$key}++;
+        }
+    } else {
+        $notfoundkeys{$key}++;
+    }
     }
     printf(OUT "</info>\n");
 }
@@ -197,58 +200,59 @@ sub modify {
     my $ret=$value;
 
     if($mkey eq "owner") {
-	$ret=~s/\@.*//gs;
+        $ret=~s/\@.*//gs;
     }
 
     if($mkey eq "state") {
-	$ret="Running"  if ($value eq "busy");
-	$ret="Down"     if ($value eq "down");
-	$ret="Idle"     if ($value eq "free");
-	$ret="Running"  if ($value eq "job-exclusive");
-	$ret="Running"  if ($value eq "job-sharing");
-	$ret="Running"  if ($value eq "time-sharing");
-	$ret="Down"     if ($value eq "offline");
-	$ret="Drained"  if ($value eq "reserve");
-	$ret="unknown"  if ($value eq "unknown");
+        $ret="Running"  if ($value eq "busy");
+        $ret="Down"     if ($value eq "down");
+        $ret="Idle"     if ($value eq "free");
+        $ret="Running"  if ($value eq "job-exclusive");
+        $ret="Running"  if ($value eq "job-sharing");
+        $ret="Running"  if ($value eq "time-sharing");
+        $ret="Down"     if ($value eq "offline");
+        $ret="Drained"  if ($value eq "reserve");
+        $ret="unknown"  if ($value eq "unknown");
     }
 
     if(($mkey eq "wall") || ($mkey eq "wallsoft")) {
-	if($value=~/\($patint seconds\)/) {
-	    $ret=$1;
-	}
-	if($value=~/$patint minutes/) {
-	    $ret=$1*60;
-	}
-	if($value=~/^$patint[:]$patint[:]$patint$/) {
-	    $ret=$1*60*60+$2*60+$3;
-	}
+        if($value=~/\($patint seconds\)/) {
+            $ret=$1;
+        }
+        if($value=~/$patint minutes/) {
+            $ret=$1*60;
+        }
+        if($value=~/^$patint[:]$patint[:]$patint$/) {
+            $ret=$1*60*60+$2*60+$3;
+        }
     }
 
     if($mkey eq "nodelist") {
-	if($ret ne "-") {
-	    $ret=~s/\//,/gs;
-	    my @nodes = split(/\+/,$ret);
-	    $ret="(".join(')(',@nodes).")";
-	}
+        if($ret ne "-") {
+            $ret=~s/\//,/gs;
+            my @nodes = split(/\+/,$ret);
+            $ret="(".join(')(',@nodes).")";
+        }
     }
 
     if($mkey eq "totalcores") {
-	if($ret=~/$patint[:]ppn=$patint/) {
-	    $ret=$1*$2;
-	}
+        if($ret=~/$patint[:]ppn=$patint/) {
+            $ret=$1*$2;
+        }
     }
     if($mkey eq "totaltasks") {
-	if($ret=~/$patint[:]ppn=$patint/) {
-	    $ret=$1*$2;
-	}
+        if($ret=~/$patint[:]ppn=$patint/) {
+            $ret=$1*$2;
+        }
     }
 
     if(($mkey eq "comment")) {
-	$ret=~s/\"//gs;
+        $ret=~s/\"//gs;
     }
     if(($mkey eq "bgp_state")) {
-	$ret=~s/\<unknown\>/unknown/gs;
+        $ret=~s/\<unknown\>/unknown/gs;
     }
 
     return($ret);
 }
+

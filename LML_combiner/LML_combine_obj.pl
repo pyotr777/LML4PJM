@@ -50,16 +50,16 @@ my $opt_timings=0;
 my $opt_dump=0;
 my $opt_dbdir="./";
 usage($0) if( ! GetOptions( 
-			    'verbose'          => \$opt_verbose,
-			    'timings'          => \$opt_timings,
-			    'dump'             => \$opt_dump,
-			    'dbdir=s'          => \$opt_dbdir,
-			    'output=s'         => \$opt_outfile
-			    ) );
+				'verbose'          => \$opt_verbose,
+				'timings'          => \$opt_timings,
+				'dump'             => \$opt_dump,
+				'dbdir=s'          => \$opt_dbdir,
+				'output=s'         => \$opt_outfile
+				) );
 
 #print "@ARGV ($opt_outfile)\n";
 if ($#ARGV < 0) {
-    &usage($0);
+	&usage($0);
 }
 my @filenames = @ARGV;
 
@@ -70,77 +70,77 @@ my $filehandler;
 $filehandler=LML_combine_file_obj->new($opt_verbose,$opt_timings);
 
 foreach $filename (@filenames) {
-    print "reading file: $filename  ...\n" if($opt_verbose); 
-    $filehandler->read_lml_fast($filename);
+	print "reading file: $filename  ...\n" if($opt_verbose); 
+	$filehandler->read_lml_fast($filename);
 }
 
 # determine system type
 my $system_type = "unknown";
 my $system_type_ref;
 {
-    keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
-    my($key,$ref);
-    while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
-	if($ref->{type} eq 'system') {
-	    $system_type_ref=$ref=$filehandler->{DATA}->{INFODATA}->{$key};
-	    if($ref->{type}) {
-		$system_type=$ref->{type};
-		printf("scan system: type is %s\n",$system_type);
-	    }
-	    last; 
+	keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
+	my($key,$ref);
+	while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
+		if($ref->{type} eq 'system') {
+			$system_type_ref=$ref=$filehandler->{DATA}->{INFODATA}->{$key};
+			if($ref->{type}) {
+				$system_type=$ref->{type};
+				printf("scan system: type is %s\n",$system_type);
+			}
+			last; 
+		}
 	}
-    }
 }
 
 print "system_type=$system_type\n";
 
 if($system_type eq "BG/P") {
-    &LML_combine_obj_bgp::update($filehandler->get_data_ref(),$opt_dbdir);
+	&LML_combine_obj_bgp::update($filehandler->get_data_ref(),$opt_dbdir);
 }
 
 if($system_type eq "BG/Q") {
-    &LML_combine_obj_bgq::update($filehandler->get_data_ref(),$opt_dbdir);
+	&LML_combine_obj_bgq::update($filehandler->get_data_ref(),$opt_dbdir);
 }
 
 if($system_type eq "ALPS") {
-    &LML_combine_obj_alps::update($filehandler->get_data_ref(),$opt_dbdir);
+	&LML_combine_obj_alps::update($filehandler->get_data_ref(),$opt_dbdir);
 }
 
 # check if Cluster is a PBS controlled Altix SMP Cluster
 if($system_type eq "Cluster") {
-    keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
-    my($key,$ref);
-    while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
-	if($ref->{type} eq 'node') {
-	    $ref=$filehandler->{DATA}->{INFODATA}->{$key};
-	    if(exists($ref->{ntype})) {
-		if($ref->{ntype} eq "PBS") {
-		    $system_type="PBS";
-		    $system_type_ref->{type}="PBS";
-		    printf("scan system: type reset to %s\n",$system_type);
+	keys(%{$filehandler->{DATA}->{OBJECT}}); # reset iterator
+	my($key,$ref);
+	while(($key,$ref)=each(%{$filehandler->{DATA}->{OBJECT}})) {
+		if($ref->{type} eq 'node') {
+			$ref=$filehandler->{DATA}->{INFODATA}->{$key};
+			if(exists($ref->{ntype})) {
+				if($ref->{ntype} eq "PBS") {
+					$system_type="PBS";
+					$system_type_ref->{type}="PBS";
+					printf("scan system: type reset to %s\n",$system_type);
+				}
+			}
+			last; 
 		}
-	    }
-	    last; 
 	}
-    }
 }
 
 if($system_type eq "Cluster") {
-    &LML_combine_obj_cluster::update($filehandler->get_data_ref(),$opt_dbdir);
+	&LML_combine_obj_cluster::update($filehandler->get_data_ref(),$opt_dbdir);
 }
 
 &LML_combine_obj_check::check_jobs($filehandler->get_data_ref());
 
 if($opt_verbose) {
-    print $filehandler->get_stat();
+	print $filehandler->get_stat();
 }
 
 $filehandler->write_lml($opt_outfile);
 
 sub usage {
-    die "Usage: $_[0] <options> <filenames> 
-                -output <file>           : LML output filename
-                -verbose                 : verbose
+	die "Usage: $_[0] <options> <filenames> 
+				-output <file>           : LML output filename
+				-verbose                 : verbose
 ";
 }
 

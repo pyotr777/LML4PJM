@@ -14,7 +14,10 @@ use Term::ANSIColor;
 
 print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 
-my $debug=0;
+require "rms/PJM/utils.pl";
+
+my $debug=1;
+my $maxjobs=50;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -65,7 +68,7 @@ my %mapping = (
     "Resource_List.walltime"                 => "wall",
     "Shell_Path_List"                        => "",
     "Walltime.Remaining"                     => "",
-    "comment"                                => "",
+    "comment"                                => "comment",
     "ctime"                                  => "",
     "depend"                                 => "",
     "etime"                                  => "",
@@ -97,8 +100,8 @@ my %mapping = (
 
     "status"                                 => "status",
     "detailedstatus"                         => "detailedstatus",
-    "nodelist"								 => "nodelist",
-    "vnodelist"								 => "vnodelist",
+    "nodelist"                               => "nodelist",
+    "vnodelist"                              => "vnodelist",
     "Resource_List.backfill"                 => "",
     "Resource_List.bandwidth"                => "",
     "Resource_List.enabled"                  => "",
@@ -137,35 +140,46 @@ my %mapping = (
     );
 
 # Get jobid-s of running jobs
-my $cmd="/usr/bin/pjstat";
+my $cmd="./mypjstat";
 
-open(IN,"$cmd -A |");
+open(IN,"$cmd |");
 my $jobid="-";
 my $lastkey="-";
-
-print "Output of $cmd -A:\n" if ($debug>0);
-while($line=<IN>) {
-    chomp($line);
- 	
-    if($line=~/(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+).*$/) {
-    	if ($1 == "0") {
-    		next;
-    	}
-    	print $line."\n";
+my $comment;
+my $jobcounter=0;
+print "Output of $cmd :\n" if ($debug>0);
+while(($line=<IN>) && ($jobcounter<$maxjobs)) {
+    print $line."\n" if ($debug>1);
+    chomp($line);    
+    if($line=~/^(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/) {
+        if ($1 == "0") {
+            next;
+        }
+        $comment=$line;
         $jobid=$1;
-        # print "jobid:".$jobid."\n";
-        $jobs{$jobid}{comment}=$line;
+        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>1);
+        
+        ## Matching every job with Perl is very slow
+        #
+        if ($4 eq "RUN") {
+            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        }
+        
+        $jobs{$jobid}{name}=$2;
         $jobs{$jobid}{step}=$jobid;
         $jobs{$jobid}{job_state}=$4;
+        $jobs{$jobid}{owner}=$5;
+        $jobs{$jobid}{group}=$6;
         $jobs{$jobid}{status}=$4;
-        my $time="$6 $7";
+        my $time="$7 $8";
         $jobs{$jobid}{qtime}=&parsetime($time);
-        $jobs{$jobid}{elapse_lim}=$8;
-        $jobs{$jobid}{totalcores}=$9;
-        $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        $jobs{$jobid}{elapse_lim}=$9;
+        $jobs{$jobid}{totalcores}=$10;
+        $jobs{$jobid}{comment}=$comment;        
         if ($debug>0) {
-        	print "$jobs{$jobid}{step} : $jobs{$jobid}{job_state}: $jobs{$jobid}{qtime} : $jobs{$jobid}{elapse_lim} : $jobs{$jobid}{totalcores} : $jobs{$jobid}{vnodelist} \n";
+            print "$jobs{$jobid}{step} : $jobs{$jobid}{status} : $jobs{$jobid}{owner} : $jobs{$jobid}{name} : $jobs{$jobid}{qtime} :w $jobs{$jobid}{elapse_lim} :tc $jobs{$jobid}{totalcores} :c $jobs{$jobid}{comment}\n";
         }
+        $jobcounter++;
     } 
 }
 close(IN);
@@ -175,8 +189,8 @@ print colored ['green'], "writing to $filename\n";
 open(OUT,"> $filename") || die "cannot open file $filename";
 printf(OUT "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 printf(OUT "<lml:lgui xmlns:lml=\"http://eclipse.org/ptp/lml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-printf(OUT "	xsi:schemaLocation=\"http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd\"\n");
-printf(OUT "	version=\"1.1\"\>\n");
+printf(OUT "    xsi:schemaLocation=\"http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd\"\n");
+printf(OUT "    version=\"1.1\"\>\n");
 printf(OUT "<objects>\n");
 $count=0;
 foreach $jobid (sort(keys(%jobs))) {
@@ -188,18 +202,18 @@ printf(OUT "<information>\n");
 foreach $jobid (sort(keys(%jobs))) {
     printf(OUT "<info oid=\"j%06d\" type=\"short\">\n",$jobnr{$jobid});
     foreach $key (sort(keys(%{$jobs{$jobid}}))) {
-    	if(exists($mapping{$key})) {
-    	    if($mapping{$key} ne "") {
-    		$value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
-    		if($value) {
-    		    printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
-    		}
-    	    } else {
-    		$notmappedkeys{$key}++;
-    	    }
-    	} else {
-    	    $notfoundkeys{$key}++;
-    	}
+        if(exists($mapping{$key})) {
+            if($mapping{$key} ne "") {
+            $value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
+            if($value) {
+                printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
+            }
+            } else {
+            $notmappedkeys{$key}++;
+            }
+        } else {
+            $notfoundkeys{$key}++;
+        }
     }
     printf(OUT "</info>\n");
 }
@@ -214,38 +228,43 @@ foreach $key (sort(keys(%notfoundkeys))) {
 }
 
 sub get_nodelist {
-	my $cpuspernode=16;
-	if (!defined @_) {
-		print "No parameter to function call get_nodelist. Need job id.";
-		return;
-	}
-	my ($jobid) = @_;
-	my @nodelist=();
-	my $cmd = "/usr/bin/pjstat";	
-	open(IN2,"$cmd -X $jobid |");
-	while($line=<IN2>) {
-	    chomp($line);
-	    my $ndlist=join(",",@nodelist);
-	    # print $line."\n";
-	    if ($line=~/^(\d+)\s+(\d+)\s+([^\s]+).*$/) {	    	
-	    	print "$2 / $3 : $ndlist\n" if ($debug>1);
-	    	if (&notinarray($3,$ndlist)) {
-	    		push @nodelist, $3;
-	    	}
-	    }
-	    elsif ($line=~/(\d+)\s+([^\s]+).*$/) {
-	    	print "$1 / $2 : $ndlist\n"  if ($debug>1);
-	    	if (&notinarray($2,$ndlist)) {
-	    		push @nodelist, $2;
-	    	}
-	    }
-	}
-	my $returnlist="";
-	foreach (@nodelist) {
-		$returnlist=$returnlist."(".$_.",$cpuspernode)";
-	}
-	print colored['cyan'], $returnlist  if ($debug>1);
-	return $returnlist;
+    my $cpuspernode=8;
+    if (!defined @_) {
+        print "No parameter to function call get_nodelist. Need job id.";
+        return;
+    }
+    my ($jobid) = @_;
+    my @nodelist=();
+    my $cmd = "/usr/bin/pjstat";    
+    open(IN2,"$cmd -X $jobid |");
+    while($line=<IN2>) {
+        chomp($line);
+        my $ndlist=join(",",@nodelist);
+        # print $line."\n";
+        my $node;
+        my $rank;
+        if ($line=~/^(\d+)\s+(\d+)\s+([^\s]+).*$/) {       
+            $node = $3;
+            $rank = $2;
+        }
+        elsif ($line=~/(\d+)\s+([^\s]+).*$/) {
+            $node = $2;
+            $rank = $1;
+        }
+        if (defined $node) {
+            $node = modify_nodenames($node);
+            print "$rank / $node : $ndlist\n" if ($debug>1);
+            if (&notinarray($node,$ndlist)) {
+                push @nodelist, $node;
+            }
+        }
+    }
+    my $returnlist="";
+    foreach (@nodelist) {
+        $returnlist=$returnlist."(".$_.",$cpuspernode)";
+    }
+    print colored['cyan'], $returnlist  if ($debug>1);
+    return $returnlist;
 }
 
 
@@ -254,13 +273,13 @@ sub get_state {
         print "length=".scalar @_;
         my $i=0;
         foreach (@_) {
-        	if (defined $_) {
-        		print $i++."=",$_;        		
-        	}
+            if (defined $_) {
+                print $i++."=",$_;              
+            }
         }
         if ($i < 2) {
-        	print (STDERR "Not enough arguments in get_state");
-        	return;	
+            print (STDERR "Not enough arguments in get_state");
+            return; 
         }
     }
     else {
@@ -273,29 +292,29 @@ sub get_state {
     $state="UNDETERMINED";$detailed_state="";
 
     if($job_state eq "C") {
-	$state="COMPLETED";$detailed_state="JOB_OUTERR_READY";
+    $state="COMPLETED";$detailed_state="JOB_OUTERR_READY";
     }
     if($job_state eq "H") {
-	$state="SUBMITTED";
-	$detailed_state="USER_ON_HOLD"   if($Hold_types eq "u");
-	$detailed_state="SYSTEM_ON_HOLD" if($Hold_types eq "s");
-	$detailed_state="USER_SYSTEM_ON_HOLD" if($Hold_types=~"(us|su)");
-	$detailed_state="SYSTEM_ON_HOLD" if($Hold_types eq "o");
+    $state="SUBMITTED";
+    $detailed_state="USER_ON_HOLD"   if($Hold_types eq "u");
+    $detailed_state="SYSTEM_ON_HOLD" if($Hold_types eq "s");
+    $detailed_state="USER_SYSTEM_ON_HOLD" if($Hold_types=~"(us|su)");
+    $detailed_state="SYSTEM_ON_HOLD" if($Hold_types eq "o");
     }
     if($job_state eq "E") {
-	$state="COMPLETED";$detailed_state="JOB_OUTERR_READY";
+    $state="COMPLETED";$detailed_state="JOB_OUTERR_READY";
     }    
     if($job_state eq "Q") {
-	$state="SUBMITTED";$detailed_state="";
+    $state="SUBMITTED";$detailed_state="";
     }    
     if($job_state eq "W") {
-	$state="SUBMITTED";$detailed_state="";
+    $state="SUBMITTED";$detailed_state="";
     }    
     if($job_state eq "T") {
-	$state="SUBMITTED";$detailed_state="";
+    $state="SUBMITTED";$detailed_state="";
     }    
     if($job_state eq "R") {
-	$state="RUNNING";$detailed_state="";
+    $state="RUNNING";$detailed_state="";
     }    
 
     return($state,$detailed_state);
@@ -306,85 +325,85 @@ sub modify {
     my $ret=$value;
 
     if(!$ret) {
-		return(undef);
+        return(undef);
     }
 
     if($mkey eq "owner") {
-		$ret=~s/\@.*//gs;
+        $ret=~s/\@.*//gs;
     }
 
     if($mkey eq "state") {
-    	$ret="Completed"   if ($value eq "C");
-    	$ret="Removed"     if ($value eq "E");
-    	$ret="System Hold" if ($value eq "H");
-    	$ret="Idle"        if ($value eq "Q" or $value eq "QUE");
-    	$ret="Idle"        if ($value eq "W");
-    	$ret="Idle"        if ($value eq "T");
-    	$ret="Running"     if ($value eq "R" or $value eq "RUN");
-    	$ret="System Hold" if ($value eq "S");
+        $ret="Completed"   if ($value eq "C");
+        $ret="Removed"     if ($value eq "E");
+        $ret="System Hold" if ($value eq "H");
+        $ret="Idle"        if ($value eq "Q" or $value eq "QUE");
+        $ret="Idle"        if ($value eq "W");
+        $ret="Idle"        if ($value eq "T");
+        $ret="Running"     if ($value eq "R" or $value eq "RUN");
+        $ret="System Hold" if ($value eq "S");
     }
 
     if($mkey eq "status") {
-    	$ret="SUBMITTED"        if ($value eq "Q" or $value eq "QUE");
-    	$ret="RUNNING"     if ($value eq "R" or $value eq "RUN");    	
+        $ret="SUBMITTED"        if ($value eq "Q" or $value eq "QUE");
+        $ret="RUNNING"     if ($value eq "R" or $value eq "RUN");       
     }
 
     if(($mkey eq "wall") || ($mkey eq "wallsoft")) {
-    	if($value=~/\($patint seconds\)/) {
-    	    $ret=$1;
-    	}
-    	if($value=~/$patint minutes/) {
-    	    $ret=$1*60;
-    	}
-    	if($value=~/^$patint[:]$patint[:]$patint$/) {
-    	    $ret=$1*60*60+$2*60+$3;
-    	}
+        if($value=~/\($patint seconds\)/) {
+            $ret=$1;
+        }
+        if($value=~/$patint minutes/) {
+            $ret=$1*60;
+        }
+        if($value=~/^$patint[:]$patint[:]$patint$/) {
+            $ret=$1*60*60+$2*60+$3;
+        }
     }
 
     if($mkey eq "nodelist") {
-		if($ret ne "-") {
-		    $ret=~s/\//,/gs;
-		    my @nodes = split(/\+/,$ret);
-		    $ret="(".join(')(',@nodes).")";
-		}
+        if($ret ne "-") {
+            $ret=~s/\//,/gs;
+            my @nodes = split(/\+/,$ret);
+            $ret="(".join(')(',@nodes).")";
+        }
     }
 
     
 
     if($mkey eq "totalcores") {
-	my $numcores=0;
-	my ($spec);
-	foreach $spec (split(/\s*\+\s*/,$ret)) {
-	    # std job
-	    if($ret=~/^$patint[:]ppn=$patint/) {
-		$numcores+=$1*$2;
-	    } elsif($ret=~/^$patwrd[:]ppn=$patint/) {
-		$numcores+=1*$2;
-	    }
-	}
-	$ret=$numcores if($numcores>0);
+        my $numcores=0;
+        my ($spec);
+        foreach $spec (split(/\s*\+\s*/,$ret)) {
+            # std job
+            if($ret=~/^$patint[:]ppn=$patint/) {
+            $numcores+=$1*$2;
+            } elsif($ret=~/^$patwrd[:]ppn=$patint/) {
+            $numcores+=1*$2;
+            }
+        }
+        $ret=$numcores if($numcores>0);
     }
     if($mkey eq "totaltasks") {
-	my $numcores=0;
-	my ($spec);
-	foreach $spec (split(/\s*\+\s*/,$ret)) {
-	    # std job
-	    if($ret=~/^$patint[:]ppn=$patint/) {
-		$numcores+=$1*$2;
-	    } elsif($ret=~/^$patwrd[:]ppn=$patint/) {
-		$numcores+=1*$2;
-	    }
-	}
-	$ret=$numcores if($numcores>0);
+        my $numcores=0;
+        my ($spec);
+        foreach $spec (split(/\s*\+\s*/,$ret)) {
+            # std job
+            if($ret=~/^$patint[:]ppn=$patint/) {
+              $numcores+=$1*$2;
+            } elsif($ret=~/^$patwrd[:]ppn=$patint/) {
+              $numcores+=1*$2;
+            }
+        }
+        $ret=$numcores if($numcores>0);
     }
 
     if(($mkey eq "comment")) {
-	$ret=~s/\"//gs;
+    $ret=~s/\"//gs;
     }
 
     # mask & in user input
     if($ret=~/\&/) {
-	$ret=~s/\&/\&amp\;/gs;
+        $ret=~s/\&/\&amp\;/gs;
     } 
 
 
@@ -392,19 +411,19 @@ sub modify {
 }
 
 sub parsetime {
-	my ($value)= @_;
-	my $ret=$value;
+    my ($value)= @_;
+    my $ret=$value;
     $ret =~ s/<//g;
     $ret =~ s/\(//g;
     $ret =~ s/\)//g;
-	return ($ret);
+    return ($ret);
 }
 
 sub notinarray {
-	my ($val,$arr_s)=@_;
-	print "Value: $val, arr: $arr_s\n" if ($debug>1);
-	if (index($arr_s.",",$val.",") != -1) {
-		return 0;
-	}
-	return 1;
+    my ($val,$arr_s)=@_;
+    print "Value: $val, arr: $arr_s\n" if ($debug>1);
+    if (index($arr_s.",",$val.",") != -1) {
+        return 0;
+    }
+    return 1;
 }
