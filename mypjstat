@@ -2,5 +2,5 @@
 user=$(whoami)
 alljobs=$(pjstat -A)
 grep -i $user <<< "$alljobs"
-echo "$alljobs" | grep RUN | grep -i small | head -n 3
+# echo "$alljobs" | grep RUN | grep -i x | head -n 5
 
