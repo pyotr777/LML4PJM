@@ -14,60 +14,48 @@
 # that it is possible to tell which hierarchy units the nodes belong to.
 
 use strict;
-use Data::Dumper;
 my $debug=1;
 my %mapping = &prepare_mapping();
-print "Prepared hash of size ". scalar keys %mapping;
-print "\n";
-print Dumper(\%mapping) if ($debug > 1);
 
 sub modify_nodenames {
     my ($orig_name) = @_;    
     if (! defined $orig_name) {
         return "";
     }
-    my $new_name = $mapping{$orig_name};
-    if (! defined $new_name) {
-        $new_name = $orig_name;
-        print "No mapping for node $orig_name\n" if ($debug>0);
+
+    my $use_digits = 2;  # Use a few last symbols from node names
+    my $tail = substr($orig_name,(-1*$use_digits));
+    my $l = length($orig_name);
+    my $head = substr($orig_name,0,$l - $use_digits);        
+    my $new_tail = $mapping{$tail};
+    if (! defined $new_tail) {
+        $new_tail = $tail;
     }
-    print "[ NODE: $orig_name ] \t\t\t$new_name\n" if ($debug>1);
+    print "[ NODE: $head $tail ] \t\t\t$new_tail\n" if ($debug>0);
+    my $new_name = $head . $new_tail;
     return $new_name;    
 }
 
 sub prepare_mapping {
-
-    # Node number (key): 0x 01 01 00 10
-    #                       ^  ^     ^ loop3 hex 10 - 6F
-    #                       |  | loop2 hex 01 - 18
-    #                       | loop1 hex 01 -24
-
-    # Map to (value): 0x 0001 00 01
-    #                    ^       ^ 01-96 dec  nodes
-    #                    | 0001 - 0864 dec   racks
-
     my %mapping = ();
-    my $node_count=1;
-    my $rack_count=1;
-    my $n_start = 16; 	# 10 hex
-    my $n_end = 111; 	# 6F hex
-    my $r1_start = 1;
-    my $r1_end = 24;	# 18 hex
-    my $r2_start = 1;
-    my $r2_end = 36;	# 24 hex
+    my $start = 16;
+    my $end = 111;
+    
+    my $mod_tf = 3;  # number of boards in 1 tofu unit
+    my $mod_bd = 4;   # number of node in 1 board
 
-    for (my $i=$r2_start; $i<=$r2_end; $i++) {  # loop 1
-        for (my $j=$r1_start; $j<=$r1_end; $j++) {  # loop 2
-            $node_count=1;
-            for (my $k=$n_start; $k<=$n_end; $k++) {  # loop 3
-                my $key = "0x".uc(sprintf("%02x%02x00%02x",$i,$j,$k));
-                my $value = sprintf("0x%04d00%02d",$rack_count,$node_count); 
-                $mapping{$key} = $value;
-                print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>1);
-                $node_count++;
-            }
-            $rack_count++;
-        }
+    my $mod1 = $mod_bd * $mod_tf;
+    my $mod2 = $mod_bd;    
+    for (my $i=0; $i <= $end-$start; $i++) {
+        my $key = uc(sprintf("%x",$i+$start)); # These will be keys for mapping hash
+        my $d1 = int ($i/$mod1);
+        my $leftover = $i - $mod1*$d1;
+        my $d2 = int ($leftover/$mod2);
+        $leftover = $leftover - $mod2*$d2;
+        my $d3 = $leftover;
+        my $value =  $d1 . $d2 . $d3;      
+        print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>0);
+        $mapping{$key} = $value;
     }
     return %mapping;
 }
