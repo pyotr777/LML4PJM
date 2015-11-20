@@ -17,7 +17,6 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 require "rms/PJM/utils.pl";
 
 my $debug=1;
-my $maxjobs=50;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -68,7 +67,7 @@ my %mapping = (
     "Resource_List.walltime"                 => "wall",
     "Shell_Path_List"                        => "",
     "Walltime.Remaining"                     => "",
-    "comment"                                => "comment",
+    "comment"                                => "",
     "ctime"                                  => "",
     "depend"                                 => "",
     "etime"                                  => "",
@@ -140,46 +139,35 @@ my %mapping = (
     );
 
 # Get jobid-s of running jobs
-my $cmd="./mypjstat";
+my $cmd="/usr/bin/pjstat";
 
-open(IN,"$cmd |");
+open(IN,"$cmd -A |");
 my $jobid="-";
 my $lastkey="-";
-my $comment;
-my $jobcounter=0;
-print "Output of $cmd :\n" if ($debug>0);
-while(($line=<IN>) && ($jobcounter<$maxjobs)) {
-    print $line."\n" if ($debug>1);
-    chomp($line);    
-    if($line=~/^(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)/) {
+
+print "Output of $cmd -A:\n" if ($debug>0);
+while($line=<IN>) {
+    chomp($line);
+    
+    if($line=~/(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+).*$/) {
         if ($1 == "0") {
             next;
         }
-        $comment=$line;
+        print $line."\n";
         $jobid=$1;
-        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>1);
-        
-        ## Matching every job with Perl is very slow
-        #
-        if ($4 eq "RUN") {
-            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
-        }
-        
-        $jobs{$jobid}{name}=$2;
+        # print "jobid:".$jobid."\n";
+        $jobs{$jobid}{comment}=$line;
         $jobs{$jobid}{step}=$jobid;
         $jobs{$jobid}{job_state}=$4;
-        $jobs{$jobid}{owner}=$5;
-        $jobs{$jobid}{group}=$6;
         $jobs{$jobid}{status}=$4;
-        my $time="$7 $8";
+        my $time="$6 $7";
         $jobs{$jobid}{qtime}=&parsetime($time);
-        $jobs{$jobid}{elapse_lim}=$9;
-        $jobs{$jobid}{totalcores}=$10;
-        $jobs{$jobid}{comment}=$comment;        
+        $jobs{$jobid}{elapse_lim}=$8;
+        $jobs{$jobid}{totalcores}=$9;
+        $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
         if ($debug>0) {
-            print "$jobs{$jobid}{step} : $jobs{$jobid}{status} : $jobs{$jobid}{owner} : $jobs{$jobid}{name} : $jobs{$jobid}{qtime} :w $jobs{$jobid}{elapse_lim} :tc $jobs{$jobid}{totalcores} :c $jobs{$jobid}{comment}\n";
+            print "$jobs{$jobid}{step} : $jobs{$jobid}{job_state}: $jobs{$jobid}{qtime} : $jobs{$jobid}{elapse_lim} : $jobs{$jobid}{totalcores} : $jobs{$jobid}{vnodelist} \n";
         }
-        $jobcounter++;
     } 
 }
 close(IN);
@@ -228,7 +216,7 @@ foreach $key (sort(keys(%notfoundkeys))) {
 }
 
 sub get_nodelist {
-    my $cpuspernode=8;
+    my $cpuspernode=16;
     if (!defined @_) {
         print "No parameter to function call get_nodelist. Need job id.";
         return;

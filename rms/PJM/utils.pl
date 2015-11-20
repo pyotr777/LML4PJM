@@ -41,19 +41,15 @@ sub prepare_mapping {
     my $start = 16;
     my $end = 111;
     
-    my $mod_tf = 3;  # number of boards in 1 tofu unit
-    my $mod_bd = 4;   # number of node in 1 board
-
-    my $mod1 = $mod_bd * $mod_tf;
-    my $mod2 = $mod_bd;    
+    my $mod_tf = 12;  # number of nodes in 1 tofu unit
+    
+    my $mod1 = $mod_tf;
+    # my $mod2 = $mod_bd;    
     for (my $i=0; $i <= $end-$start; $i++) {
         my $key = uc(sprintf("%x",$i+$start)); # These will be keys for mapping hash
-        my $d1 = int ($i/$mod1);
-        my $leftover = $i - $mod1*$d1;
-        my $d2 = int ($leftover/$mod2);
-        $leftover = $leftover - $mod2*$d2;
-        my $d3 = $leftover;
-        my $value =  $d1 . $d2 . $d3;      
+        my $d1 = int ($i/$mod1);  # Use integer portion (number of tofu-units)
+        my $d2 = $i - $mod1*$d1;  # Reminder is the number of node within tofu-unit
+        my $value =  sprintf("%d%02d",$d1,$d2);      
         print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>0);
         $mapping{$key} = $value;
     }
