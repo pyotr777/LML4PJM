@@ -17,6 +17,9 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 require "rms/PJM/utils.pl";
 
 my $debug=1;
+my $maxjobs=100;
+my $cpuspernode=16;
+my $corespercpu=16;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -67,7 +70,7 @@ my %mapping = (
     "Resource_List.walltime"                 => "wall",
     "Shell_Path_List"                        => "",
     "Walltime.Remaining"                     => "",
-    "comment"                                => "",
+    "comment"                                => "comment",
     "ctime"                                  => "",
     "depend"                                 => "",
     "etime"                                  => "",
@@ -91,12 +94,12 @@ my %mapping = (
     "start_count"                            => "",
     "start_time"                             => "",
     "submit_args"                            => "",
-
+    "name"                                   => "name",
     "step"                                   => "step",
     "totaltasks"                             => "totaltasks",
     "totalcores"                             => "totalcores",
     "spec"                                   => "spec",
-
+    "owner"                                  => "owner",
     "status"                                 => "status",
     "detailedstatus"                         => "detailedstatus",
     "nodelist"                               => "nodelist",
@@ -139,35 +142,46 @@ my %mapping = (
     );
 
 # Get jobid-s of running jobs
+my $cmd="./mypjstat";
 my $cmd="/usr/bin/pjstat";
-
 open(IN,"$cmd -A |");
 my $jobid="-";
 my $lastkey="-";
-
-print "Output of $cmd -A:\n" if ($debug>0);
-while($line=<IN>) {
-    chomp($line);
-    
-    if($line=~/(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+).*$/) {
+my $comment;
+my $jobcounter=0;
+print "Output of $cmd :\n" if ($debug>0);
+while(($line=<IN>) && ($jobcounter<$maxjobs)) {
+    print $line."\n" if ($debug>1);
+    chomp($line);    
+    if ($line=~/(\d+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s]+).*$/) { 
         if ($1 == "0") {
             next;
         }
-        print $line."\n";
+        $comment=$line;
         $jobid=$1;
-        # print "jobid:".$jobid."\n";
-        $jobs{$jobid}{comment}=$line;
+        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>1);
+        
+        ## Matching every job with Perl is very slow
+        #
+        if ($4 eq "RUN") {
+            $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        }
+        
+        $jobs{$jobid}{name}=$2;
         $jobs{$jobid}{step}=$jobid;
         $jobs{$jobid}{job_state}=$4;
+        $jobs{$jobid}{owner}=$5;
+        $jobs{$jobid}{group}=$6;
         $jobs{$jobid}{status}=$4;
         my $time="$6 $7";
         $jobs{$jobid}{qtime}=&parsetime($time);
         $jobs{$jobid}{elapse_lim}=$8;
         $jobs{$jobid}{totalcores}=$9;
-        $jobs{$jobid}{vnodelist}=&get_nodelist($jobid);
+        $jobs{$jobid}{comment}=$comment;        
         if ($debug>0) {
-            print "$jobs{$jobid}{step} : $jobs{$jobid}{job_state}: $jobs{$jobid}{qtime} : $jobs{$jobid}{elapse_lim} : $jobs{$jobid}{totalcores} : $jobs{$jobid}{vnodelist} \n";
+            print "$jobs{$jobid}{step} : $jobs{$jobid}{status} : $jobs{$jobid}{owner} : $jobs{$jobid}{name} : $jobs{$jobid}{qtime} :w $jobs{$jobid}{elapse_lim} :tc $jobs{$jobid}{totalcores} :c $jobs{$jobid}{comment}\n";
         }
+        $jobcounter++;
     } 
 }
 close(IN);
@@ -192,12 +206,13 @@ foreach $jobid (sort(keys(%jobs))) {
     foreach $key (sort(keys(%{$jobs{$jobid}}))) {
         if(exists($mapping{$key})) {
             if($mapping{$key} ne "") {
-            $value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
-            if($value) {
-                printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
-            }
+                $value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
+                if($value) {
+                    printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
+                    print colored['green'], "key=".$mapping{$key}." value=".$value."\n" if ($debug>0);
+                }
             } else {
-            $notmappedkeys{$key}++;
+                $notmappedkeys{$key}++;
             }
         } else {
             $notfoundkeys{$key}++;
@@ -216,7 +231,7 @@ foreach $key (sort(keys(%notfoundkeys))) {
 }
 
 sub get_nodelist {
-    my $cpuspernode=16;
+    
     if (!defined @_) {
         print "No parameter to function call get_nodelist. Need job id.";
         return;
@@ -317,7 +332,11 @@ sub modify {
     }
 
     if($mkey eq "owner") {
-        $ret=~s/\@.*//gs;
+#        $ret=~s/\@.*//gs;
+        if ($value =~ /\*\*\*\*\*/ ) {
+            $ret = "---";
+        }
+        print colored['yellow'], "owner: $ret\n"  if ($debug>0);
     }
 
     if($mkey eq "state") {
@@ -336,17 +355,17 @@ sub modify {
         $ret="RUNNING"     if ($value eq "R" or $value eq "RUN");       
     }
 
-    if(($mkey eq "wall") || ($mkey eq "wallsoft")) {
-        if($value=~/\($patint seconds\)/) {
-            $ret=$1;
-        }
-        if($value=~/$patint minutes/) {
-            $ret=$1*60;
-        }
-        if($value=~/^$patint[:]$patint[:]$patint$/) {
-            $ret=$1*60*60+$2*60+$3;
-        }
-    }
+#    if(($mkey eq "wall") || ($mkey eq "wallsoft")) {        
+#        if($value=~/\($patint seconds\)/) {
+#            $ret=$1;
+#        }
+#        if($value=~/$patint minutes/) {
+#            $ret=$1*60;
+#        }
+#        if($value=~/^$patint[:]$patint[:]$patint$/) {
+#            $ret=$1*60*60+$2*60+$3;
+#        }
+#    }
 
     if($mkey eq "nodelist") {
         if($ret ne "-") {
@@ -354,22 +373,10 @@ sub modify {
             my @nodes = split(/\+/,$ret);
             $ret="(".join(')(',@nodes).")";
         }
-    }
+    }    
 
-    
-
-    if($mkey eq "totalcores") {
-        my $numcores=0;
-        my ($spec);
-        foreach $spec (split(/\s*\+\s*/,$ret)) {
-            # std job
-            if($ret=~/^$patint[:]ppn=$patint/) {
-            $numcores+=$1*$2;
-            } elsif($ret=~/^$patwrd[:]ppn=$patint/) {
-            $numcores+=1*$2;
-            }
-        }
-        $ret=$numcores if($numcores>0);
+    if($mkey eq "totalcores") {        
+        $ret=$value." x".$corespercpu;
     }
     if($mkey eq "totaltasks") {
         my $numcores=0;
@@ -386,15 +393,13 @@ sub modify {
     }
 
     if(($mkey eq "comment")) {
-    $ret=~s/\"//gs;
+        $ret=~s/\"//gs;
     }
 
     # mask & in user input
     if($ret=~/\&/) {
         $ret=~s/\&/\&amp\;/gs;
     } 
-
-
     return($ret);
 }
 

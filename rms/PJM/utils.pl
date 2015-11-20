@@ -14,7 +14,7 @@
 # that it is possible to tell which hierarchy units the nodes belong to.
 
 use strict;
-my $debug=1;
+my $debug=0;
 my %mapping = &prepare_mapping();
 
 sub modify_nodenames {

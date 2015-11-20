@@ -1,6 +1,8 @@
 #!/bin/bash
-user=$(whoami)
-alljobs=$(pjstat -A)
-grep -i $user <<< "$alljobs"
+# Display all jobs
+pjstat -A
+#user=$(whoami)
+# alljobs=$(pjstat -A)
+# grep -i $user <<< "$alljobs"
 # echo "$alljobs" | grep RUN | grep -i x | head -n 5
 
