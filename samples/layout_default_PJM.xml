@@ -33,7 +33,7 @@
     </nodedisplaylayout>
 
     <tablelayout id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" active="true" contenthint="jobs">
-        <column cid="1" pos="1" width="0.2" active="true" key="state" />
+        <column cid="1" pos="1" width="0.2" active="true" key="status" />
         <column cid="2" pos="2" width="0.1" active="true" key="step" />
         <column cid="3" pos="3" width="0.1" active="true" key="totalcores" />        
         <column cid="4" pos="4" width="0.2" active="true" key="queuedate" />
