@@ -11,7 +11,7 @@
 
 package LML_da_util;
 use Time::Local;
-my $debug=0;
+my $debug=1;
 use Data::Dumper;
 
 # SUPPORT FUNCTIONS
@@ -62,11 +62,20 @@ sub substitute_recursive {
 }
 
 sub substitute {
-    my($strref,$hashref)=@_;    my($found,$c,@varlist1,@varlist2,$var);
+    if($debug>=3) {
+        my $trace = ( caller(1) )[3];
+        printf("Call to substitute\n%s\n", $trace);
+    }    
+    my($strref,$hashref)=@_;    
+    my($found,$c,@varlist1,@varlist2,$var);
     my($SUBSTITUTE_NOTFOUND);
     $c=0;
     $found=0;
 
+    if (!defined $$strref) {
+        print "Udefined strref";
+        return(0);
+    }
     return(0) if($$strref eq "");
 
     # search normal variables
