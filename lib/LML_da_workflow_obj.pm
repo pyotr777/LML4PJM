@@ -23,7 +23,7 @@ sub new {
     my $class   = ref($proto) || $proto;
     my $verbose = shift;
     my $timings = shift;
-    printf("\t LML_da_workflow_obj: new %s\n",ref($proto)) if($debug>=3);
+    printf("LML_da_workflow_obj: new %s\n",ref($proto)) if($debug>=3);
     $self->{DATA}      = {};
     $self->{VERBOSE}   = $verbose; 
     $self->{TIMINGS}   = $timings; 
@@ -42,7 +42,7 @@ sub read_xml_fast {
     if(!open(IN,$infile)) {
         print STDERR "$0: ERROR: could not open $infile, leaving ...\n";return(0);
     }
-    printf("Readeing from file %s\n", $infile) if ($debug>0);
+    printf("Reading from file %s\n", $infile) if ($debug>0);
     while(<IN>) {
         $xmlin.=$_;
     }
@@ -124,42 +124,42 @@ sub xml_start {
 #    print "LML_da_workflow_obj: lml_start >$name< \n";
 
     if($name eq "!--") {
-    # a comment
-    return(1);
+        # a comment
+        return(1);
     }
     my %attr=(@_);
 
 #    print Dumper(\%attr);
 
     if($name eq "LML_da_workflow") {
-    foreach $k (sort keys %attr) {
-        $o->{LML_da_workflow}->{$k}=$attr{$k};
-    }
-    return(1);
+        foreach $k (sort keys %attr) {
+            $o->{LML_da_workflow}->{$k}=$attr{$k};
+        }
+        return(1);
     }
 
     if($name eq "vardefs") {
-    return(1);
+        return(1);
     }
     if($name eq "var") {
-    push(@{$o->{vardefs}->[0]->{var}},\%attr);
-    return(1);
+        push(@{$o->{vardefs}->[0]->{var}},\%attr);
+        return(1);
     }
     if($name eq "step") {
-    $id=$attr{id};
-    $o->{LASTSTEPID}=$id;
-    foreach $k (sort keys %attr) {
-        $o->{step}->{$id}->{$k}=$attr{$k};
-    }
-    return(1);
+        $id=$attr{id};
+        $o->{LASTSTEPID}=$id;
+        foreach $k (sort keys %attr) {
+            $o->{step}->{$id}->{$k}=$attr{$k};
+        }
+        return(1);
     }
     if($name eq "cmd") {
-    $id=$attr{id};
-    $sid=$o->{LASTSTEPID};
+        $id=$attr{id};
+        $sid=$o->{LASTSTEPID};
 
-    push(@{$o->{step}->{$sid}->{cmd}},\%attr);
+        push(@{$o->{step}->{$sid}->{cmd}},\%attr);
 
-    return(1);
+        return(1);
     }
 
     # unknown element
@@ -176,7 +176,7 @@ sub xml_end {
     if($name=~/vardefs/) {
     }
     if($name=~/step/) {
-    $o->{LASTSTEPID}=undef;
+        $o->{LASTSTEPID}=undef;
     }
 
 #    print Dumper($o->{NODEDISPLAYSTACK});
@@ -196,37 +196,37 @@ sub write_xml {
 
     printf(OUT "<LML_da_workflow ");
     foreach $k (sort keys %{$self->{DATA}->{LML_da_workflow}}) {
-    printf(OUT "%s=\"%s\"\n ",$k,$self->{DATA}->{LMLLGUI}->{$k});
+        printf(OUT "%s=\"%s\"\n ",$k,$self->{DATA}->{LMLLGUI}->{$k});
     }
     printf(OUT "     \>\n");
 
     printf(OUT "<vardefs>\n");
     foreach $ref (@{$self->{DATA}->{vardefs}->[0]->{var}}) {
-    printf(OUT "<var");
-    foreach $k (sort keys %{$ref}) {
-        printf(OUT " %s=\"%s\"",$k,$ref->{$k});
-    }
-    printf(OUT "/>\n");
-    }
-    printf(OUT "</vardefs>\n");
-
-    foreach $id (sort keys %{$self->{DATA}->{step}}) {
-    printf(OUT "<step");
-    foreach $k (sort keys %{$self->{DATA}->{step}->{$id}}) {
-        next if($k eq "cmd");
-        printf(OUT " %s=\"%s\"",$k,$self->{DATA}->{step}->{$id}->{$k});
-    }
-    printf(OUT ">\n");
-    if(exists($self->{DATA}->{step}->{$id}->{cmd})) {
-        foreach $ref (@{$self->{DATA}->{step}->{$id}->{cmd}}) {
-        printf(OUT "<cmd ");
+        printf(OUT "<var");
         foreach $k (sort keys %{$ref}) {
             printf(OUT " %s=\"%s\"",$k,$ref->{$k});
         }
         printf(OUT "/>\n");
-        }
     }
-    printf(OUT "</step>\n");
+    printf(OUT "</vardefs>\n");
+
+    foreach $id (sort keys %{$self->{DATA}->{step}}) {
+        printf(OUT "<step");
+        foreach $k (sort keys %{$self->{DATA}->{step}->{$id}}) {
+            next if($k eq "cmd");
+            printf(OUT " %s=\"%s\"",$k,$self->{DATA}->{step}->{$id}->{$k});
+        }
+        printf(OUT ">\n");
+        if(exists($self->{DATA}->{step}->{$id}->{cmd})) {
+            foreach $ref (@{$self->{DATA}->{step}->{$id}->{cmd}}) {
+                printf(OUT "<cmd ");
+                foreach $k (sort keys %{$ref}) {
+                    printf(OUT " %s=\"%s\"",$k,$ref->{$k});
+                }
+                printf(OUT "/>\n");
+            }
+        }
+        printf(OUT "</step>\n");
     }
     
     printf(OUT "</LML_da_workflow>\n");
@@ -236,8 +236,7 @@ sub write_xml {
     my $tdiff=time-$tstart;
     printf("LML_da_workflow_obj: wrote  XML in %6.4f sec to %s\n",$tdiff,$outfile) if($self->{TIMINGS});
     
-    return($rc);
-    
+    return($rc);    
 }
 
     

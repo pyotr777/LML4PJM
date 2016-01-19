@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:layout xsi:schemaLocation="http://eclipse.org/ptp/lml http://eclipse.org/ptp/schemas/v1.1/lgui.xsd" xmlns:ns2="http://eclipse.org/ptp/lml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <request>
+        <driver name="PJM">
+            <arg attribute="cache" value="0"/>
+            <arg attribute="cacheinterval" value="60"/>
+        </driver>
+        <layoutManagement getDefaultData="true"/>
+    </request>
+    <tablelayout contenthint="jobs" id="tl_Run" gid="org.eclipse.ptp.rm.lml.ui.ActiveJobsView" active="true">
+        <column cid="1" pos="0" width="0.1884272997032641" sorted="asc" active="true" key="status">
+            <pattern>
+                <select value="RUNNING" rel="="/>
+            </pattern>
+        </column>
+        <column cid="2" pos="1" width="0.09347181008902077" active="true" key="step"/>
+        <column cid="3" pos="2" width="0.09347181008902077" active="true" key="totalcores"/>
+        <column cid="4" pos="3" width="0.1884272997032641" active="true" key="queuedate"/>
+        <column cid="5" pos="4" width="0.1884272997032641" active="true" key="wall"/>
+        <column cid="6" pos="5" width="0.1884272997032641" active="true" key="comment"/>
+        <column cid="7" pos="6" width="1.0" active="false" key="vnodelist"/>
+        <column cid="8" pos="7" width="1.0" active="false" key="group"/>
+        <column cid="9" pos="8" width="1.0" active="false" key="nodelist"/>
+        <column cid="10" pos="9" width="1.0" active="false" key="state"/>
+        <column cid="11" pos="10" width="1.0" active="false" key="totaltasks"/>
+    </tablelayout>
+    <nodedisplaylayout id="nodedisplay" gid="org.eclipse.ptp.rm.lml.ui.SystemMonitorView" active="true">
+        <schemehint>
+            <el1 tagname="rack" mask="0x%04d" min="1" max="864">
+                <el2 tagname="node" mask="00%02d" min="1" max="96">
+                    <el3 tagname="core" mask="-c%02d" min="0" max="7"/>
+                </el2>
+            </el1>
+        </schemehint>
+        <el0 cols="1" vgap="0" showtitle="true" maxlevel="3">
+            <el1 cols="24" hgap="0" vgap="0" showtitle="true" min="1" max="864">
+                <el2 cols="4" hgap="0" vgap="0" showtitle="true" min="1" max="96">
+                    <el3 showtitle="false" min="0" max="7"/>
+                </el2>
+            </el1>
+        </el0>
+    </nodedisplaylayout>
+</ns2:layout>

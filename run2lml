@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo -e "\n"
+#./LML_da_driver.pl <sample_request.xml
+./LML_da.pl -conf=./samples/LML_da_PJM.conf <sample_request.xml
+echo -e "\n\n" 

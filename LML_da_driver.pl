@@ -20,15 +20,20 @@ use LML_da_workflow_obj;
 use Data_cache;
 use Storable qw(dclone); 
 use File::Copy;
-
 use strict;
+
+use Term::ANSIColor;
+
+print colored ['blue'], "Running LML_da_driver.pl\n";
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
 my $patwrd="([\^\\s]+)";       # Pattern for Work (all nonblank characters)
 my $patbl ="\\s+";             # Pattern for blank space (variable length)
 
-my $version="1.18";
+my $version="1.19.a02";
+
+my $debug=1;
  
 my ($tstart,$tdiff,$rc);
 
@@ -111,6 +116,11 @@ usage($0) if( ! GetOptions(
 my $date=`date`;
 chomp($date);
 
+my $configfile="./LML_da_workflow.conf"; # path to a custom workflow file 
+if ($debug>0) {
+    &report_if_verbose("Exists workflow config file %s\n", "$configfile");
+}
+
 my $REPORT;
 
 &open_report();
@@ -138,6 +148,10 @@ if( ($#ARGV > 1) || ($#ARGV == 0 ) ) {
 # check request input file, parse the file into hash datastructure
 my $startRequestLocation = "./request_".$hostname."_".$ppid.".xml";
 my $filehandler_request = parseLMLRequest($requestfile, $startRequestLocation, $options{verbose});
+
+&report_if_verbose("Requestfile=%s\n","$requestfile");
+&report_if_verbose("startRequestLocation=%s\n","$startRequestLocation");
+
 my @options_from_request = ();
 #Try to parse additional options from the LML request
 if(!$options{nocheckrequest} && defined($filehandler_request->{DATA}->{REQUEST}->{driver}) ){
@@ -265,6 +279,10 @@ my $generate_functions;
 
 my $rms="undef";
 
+if ($debug>0) {
+	&report_if_verbose("Rawfile=%s\n", $rawfile);
+}
+
 #########################
 # determine how raw file 
 # will be generated
@@ -372,11 +390,11 @@ if($rawfile) {
     }
 
     if($rms eq "undef") {
-	&exit_witherror($outputfile,"$0: could not determine rms, exiting ...\n");
+	   &exit_witherror($outputfile,"$0: could not determine rms, exiting ...\n");
     }
     
     if (exists($main::generate_functions->{$rms})) {
-	$laststep=&{$main::generate_functions->{$rms}}($workflowxml, $laststep, \%cmds);
+	   $laststep=&{$main::generate_functions->{$rms}}($workflowxml, $laststep, \%cmds);
     }
 
     $step="addcolor";
@@ -457,10 +475,10 @@ $laststep=$step;
 # Dump?
 #########################
 if($options{dump}) {
-    print STDERR Dumper($filehandler_request->{DATA});
+    #print STDERR Dumper($filehandler_request->{DATA});
     print STDERR Dumper($workflowxml);
-    print STDERR Dumper($filehandler_layout->{DATA});
-    exit(1);
+    #print STDERR Dumper($filehandler_layout->{DATA});
+    #exit(1);
 }
 
 } #  ! $options{test}
@@ -474,7 +492,16 @@ if(! $options{test}) {
     $workflow_obj->write_xml("$tmpdir/workflow.xml");
     my $cmd="$^X ./LML_da.pl";
     $cmd .= " -v"  if($options{verbose});
-    $cmd .= " -c $tmpdir/workflow.xml";
+
+    # Use custom file if exists
+    # This is a TEMPORARY WORKAROUND.
+    # Should disable workflow creation in the first place (throughout the code where add_exec_step_to_workflow is called) 
+    # if workflow configuration file exists.
+    if (-f "$configfile") {
+        $cmd .= " -c $configfile";
+    } else {
+        $cmd .= " -c $tmpdir/workflow.xml";
+    }
     $cmd .= " > $tmpdir/LML_da.log";
     $cmd .= " 2> $tmpdir/LML_da.errlog";
 
@@ -555,7 +582,7 @@ if(($removetmpdir) && (!$options{keeptmp})) {
     if(!rmdir($tmpdir)) {
         &report("$0: could not rmdir $tmpdir ...$!, exiting ...\n");
     } else {
-        &report_if_verbose("$0: tmpdir removed ($tmpdir)\n");
+        &report_if_verbose("$0: tmpdir removed (%s)\n",$tmpdir);
     }
 }
 
@@ -722,11 +749,19 @@ sub report {
 sub report_if_verbose {
     my $format = shift;
     # print to protocol file
-    $REPORT.=sprintf( $format, @_ );
+    if (defined @_) {
+        $REPORT.=sprintf( $format, @_ );
+    } else {
+        $REPORT.=printf($format);
+    }
     
     if($options{verbose}) {
         # print to stderr
-        printf(STDERR $format, @_);
+        if (defined @_) {
+            printf(STDERR $format, @_);
+        } else {
+            printf(STDERR $format);
+        }
     }
 }
 

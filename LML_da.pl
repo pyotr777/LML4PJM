@@ -17,18 +17,25 @@ use Getopt::Long;
 use Time::Local;
 use Time::HiRes qw ( time );
 use LML_da_workflow_obj;
-
+use Term::ANSIColor;
+use LML_da_util;
+use LML_da_step;
 use strict;
+
+my $version="1.1.a01";
+
+my $debug=2;
+
+print colored ['blue'], "Running LML_da.pl\n";
+if ($debug>2) {
+    system("ps afx");
+}
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
 my $patwrd="([\^\\s]+)";       # Pattern for Work (all noblank characters)
 my $patbl ="\\s+";             # Pattern for blank space (variable length)
 
-use LML_da_util;
-use LML_da_step;
-
-my $version="1.0";
 
 # time measurement
 my ($tstart,$tdiff,$rc);

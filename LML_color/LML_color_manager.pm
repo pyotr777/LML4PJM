@@ -550,17 +550,23 @@ sub get_color {
 		$color=$self->find_opt_color($cat); 
 	    }
 	} else {
-	    printf("llview_manage_color: not enough colors in category %s(%d) buffersize=%d...\n",$category,$cat,$self->{BUFFERSIZE}[$cat]);
+		if ($debug>1) {
+	    	printf("llview_manage_color: not enough colors in category %s(%d) buffersize=%d...\n",$category,$cat,$self->{BUFFERSIZE}[$cat]);
+	    }
 	    $color="#ff0000"; 
 	}
 	if($self->{USEDCOLORS}[$cat]->{$color}) {
-	    printf( "llview_manage_color: warning color $color in use by: %10s %-15s -> %-20s #buffer=%3d\n",
-		    $self->{USEDCOLORS}[$cat]->{$color},$id,$color,$#{$self->{BUFFER}[$cat]});
+		if ($debug>1) {
+	    	printf( "llview_manage_color: warning color $color in use by: %10s %-15s -> %-20s #buffer=%3d\n",
+		    	$self->{USEDCOLORS}[$cat]->{$color},$id,$color,$#{$self->{BUFFER}[$cat]});
+		}
 	}
 	$self->{KNOWNIDS}[$cat]->{$id}=$color;
 	$self->{USEDCOLORS}[$cat]->{$color}=$id;
-	printf( "llview_manage_color: %-15s new color for %-15s -> %-20s nr=%3d #buffer=%3d (%s)\n",$category,$id,$color,
-		$self->{COLORTONR}[$cat]->{$color},$#{$self->{BUFFER}[$cat]},join(",",caller())) if($debug>=3);
+	if ($debug>0) {
+		printf( "llview_manage_color: %-15s new color for %-15s -> %-20s nr=%3d #buffer=%3d (%s)\n",$category,$id,$color,
+			$self->{COLORTONR}[$cat]->{$color},$#{$self->{BUFFER}[$cat]},join(",",caller())) if($debug>=3);
+    	}
     }
     
     return($color);
