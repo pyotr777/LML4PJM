@@ -16,8 +16,8 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 
 require "rms/PJM/utils.pl";
 
-my $debug=1;
-my $maxjobs=50;
+my $debug=0;
+my $maxjobs=100;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
@@ -92,12 +92,12 @@ my %mapping = (
     "start_count"                            => "",
     "start_time"                             => "",
     "submit_args"                            => "",
-
+    "name"                                   => "name",
     "step"                                   => "step",
     "totaltasks"                             => "totaltasks",
     "totalcores"                             => "totalcores",
     "spec"                                   => "spec",
-
+    "owner"                                  => "owner",
     "status"                                 => "status",
     "detailedstatus"                         => "detailedstatus",
     "nodelist"                               => "nodelist",
@@ -157,7 +157,7 @@ while(($line=<IN>) && ($jobcounter<$maxjobs)) {
         }
         $comment=$line;
         $jobid=$1;
-        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>1);
+        print "matched line:".$line."\njobid:".$jobid."\n" if ($debug>0);
         
         ## Matching every job with Perl is very slow
         #
@@ -172,7 +172,8 @@ while(($line=<IN>) && ($jobcounter<$maxjobs)) {
         $jobs{$jobid}{group}=$6;
         $jobs{$jobid}{status}=$4;
         my $time="$7 $8";
-        $jobs{$jobid}{qtime}=&parsetime($time);
+        #$jobs{$jobid}{qtime}=&parsetime($time);
+        $jobs{$jobid}{qtime}=$time;
         $jobs{$jobid}{elapse_lim}=$9;
         $jobs{$jobid}{totalcores}=$10;
         $jobs{$jobid}{comment}=$comment;        
@@ -204,12 +205,13 @@ foreach $jobid (sort(keys(%jobs))) {
     foreach $key (sort(keys(%{$jobs{$jobid}}))) {
         if(exists($mapping{$key})) {
             if($mapping{$key} ne "") {
-            $value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
-            if($value) {
-                printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
-            }
+                $value=&modify($key,$mapping{$key},$jobs{$jobid}{$key});
+                if($value) {
+                    printf(OUT " <data %-20s value=\"%s\"/>\n","key=\"".$mapping{$key}."\"",$value);
+                    print colored['green'], "key=".$mapping{$key}." value=".$value."\n" if ($debug>0);
+                }
             } else {
-            $notmappedkeys{$key}++;
+                $notmappedkeys{$key}++;
             }
         } else {
             $notfoundkeys{$key}++;
@@ -329,7 +331,11 @@ sub modify {
     }
 
     if($mkey eq "owner") {
-        $ret=~s/\@.*//gs;
+#        $ret=~s/\@.*//gs;
+        if ($value =~ /\*\*\*\*\*/ ) {
+            $ret = "---";
+        }
+        print colored['yellow'], "owner: $ret\n"  if ($debug>0);
     }
 
     if($mkey eq "state") {
@@ -348,17 +354,17 @@ sub modify {
         $ret="RUNNING"     if ($value eq "R" or $value eq "RUN");       
     }
 
-    if(($mkey eq "wall") || ($mkey eq "wallsoft")) {
-        if($value=~/\($patint seconds\)/) {
-            $ret=$1;
-        }
-        if($value=~/$patint minutes/) {
-            $ret=$1*60;
-        }
-        if($value=~/^$patint[:]$patint[:]$patint$/) {
-            $ret=$1*60*60+$2*60+$3;
-        }
-    }
+#    if(($mkey eq "wall") || ($mkey eq "wallsoft")) {
+#        if($value=~/\($patint seconds\)/) {
+#            $ret=$1;
+#        }
+#        if($value=~/$patint minutes/) {
+#            $ret=$1*60;
+#        }
+#        if($value=~/^$patint[:]$patint[:]$patint$/) {
+#            $ret=$1*60*60+$2*60+$3;
+#        }
+#    }
 
     if($mkey eq "nodelist") {
         if($ret ne "-") {
