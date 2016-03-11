@@ -1,4 +1,4 @@
-#!/bin/bash -s
+#!/bin/bash
 
 cp mypjstat ../
 cp runlml ../
