@@ -10,7 +10,7 @@
 #*    Peter Bryzgalov 
 #*******************************************************************************/ 
 
-# Convers a few last characters of node names so,
+# Converts a number last characters of node names so,
 # that it is possible to tell which hierarchy units the nodes belong to.
 
 use strict;
@@ -23,7 +23,7 @@ sub modify_nodenames {
         return "";
     }
 
-    my $use_digits = 2;  # Use a few last symbols from node names
+    my $use_digits = 2;  # Use $use_digits last symbols from node names
     my $tail = substr($orig_name,(-1*$use_digits));
     my $l = length($orig_name);
     my $head = substr($orig_name,0,$l - $use_digits);        
@@ -48,7 +48,7 @@ sub prepare_mapping {
     for (my $i=0; $i <= $end-$start; $i++) {
         my $key = uc(sprintf("%x",$i+$start)); # These will be keys for mapping hash
         my $d1 = int ($i/$mod1);  # Use integer portion (number of tofu-units)
-        my $d2 = $i - $mod1*$d1;  # Reminder is the number of node within tofu-unit
+        my $d2 = $i - $mod1*$d1;  # Reminder is the node number within tofu-unit
         my $value =  sprintf("%d%02d",$d1,$d2);      
         print "\t\"$key\"\t=>  \"$value\",\n" if ($debug>0);
         $mapping{$key} = $value;
