@@ -15,7 +15,7 @@
 
 use strict;
 use Data::Dumper;
-my $debug=1;
+my $debug=0;
 my %mapping = &prepare_mapping();
 print "Prepared hash of size ". scalar keys %mapping;
 print "\n";
