@@ -17,7 +17,7 @@ print colored ['blue'], "Running PJM/da_jobs_info_LML.pl\n";
 require "rms/PJM/utils.pl";
 
 my $debug=0;
-my $maxjobs=100;
+my $maxjobs=1000;
 
 my $patint="([\\+\\-\\d]+)";   # Pattern for Integer number
 my $patfp ="([\\+\\-\\d.E]+)"; # Pattern for Floating Point number
